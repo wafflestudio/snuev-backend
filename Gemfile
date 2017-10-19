@@ -14,6 +14,8 @@ gem 'devise'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.6'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
