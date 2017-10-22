@@ -1,9 +1,5 @@
 class V1::BaseController < ApplicationController
-  before_action :authenticate_user_from_token!
-  # before_action :authenticate_user!
+  include DeviseTokenAuth::Concerns::SetUserByToken
 
-  private
-
-  def authenticate_user_from_token!
-  end
+  before_action :authenticate_user!
 end
