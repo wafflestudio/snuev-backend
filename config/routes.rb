@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  mount_devise_token_auth_for 'User', at: 'v1/user'
+
   namespace :v1, defaults: { format: :json } do
-    devise_for :users
     resources :lectures, only: [:index, :show] do
       resources :evaluations, only: [:index, :create, :update, :destroy]
     end
+    resource :user, only: [:show]
   end
 end

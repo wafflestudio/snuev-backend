@@ -10,10 +10,11 @@ gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
 gem 'jbuilder', '~> 2.5'
 gem 'rack-cors'
-gem 'devise'
+gem 'devise_token_auth'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.6'
+  gem 'rails-controller-testing'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
