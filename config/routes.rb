@@ -7,4 +7,6 @@ Rails.application.routes.draw do
     end
     resource :user, only: [:show]
   end
+
+  get 'healthz', to: 'health#index'
 end
