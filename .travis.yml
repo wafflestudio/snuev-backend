@@ -1,0 +1,11 @@
+language: ruby
+rvm:
+  - ruby-2.4.1
+addons:
+  - postgresql: '9.6'
+cache: bundler
+before_script:
+  - psql -c 'create database snuev_backend_test;' -U postgres
+script:
+  - RAILS_ENV=test bundle exec rake db:migrate
+  - RAILS_ENV=test bundle exec rake spec
