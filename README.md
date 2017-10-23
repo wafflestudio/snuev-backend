@@ -1,6 +1,7 @@
 # SNUEV Backend
 
 [![Build Status](https://travis-ci.org/wafflestudio/snuev-backend.svg)](https://travis-ci.org/wafflestudio/snuev-backend)
+[![Maintainability](https://api.codeclimate.com/v1/badges/0c22afff95fb49719426/maintainability)](https://codeclimate.com/github/wafflestudio/snuev-backend/maintainability)
 
 This codebase is backend service powers SNUEV, a course evaluation system for SNU students.
 
