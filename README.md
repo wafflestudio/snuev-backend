@@ -28,6 +28,13 @@ After cloning the codebase,
 
 And the server will be running at http://localhost:3001.
 
+## Running spec
+
+```bash
+  docker-compose -f docker-compose.test.yml run test rails db:create db:migrate # initial setup
+  docker-compose -f docker-compose.test.yml run test
+```
+
 ## Contributing
 
 Sorry, we are not open to public contribution currently.

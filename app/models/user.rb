@@ -6,4 +6,12 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
   has_many :evaluations
+
+  before_validation :set_email_from_username, on: :create
+
+  private
+
+  def set_email_from_username
+    self.email ||= "#{username}@snu.ac.kr"
+  end
 end
