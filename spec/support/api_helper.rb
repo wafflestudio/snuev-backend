@@ -15,6 +15,5 @@ module V1ControllerHelper
 end
 
 RSpec.configure do |config|
-  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include V1ControllerHelper, type: :controller
 end
