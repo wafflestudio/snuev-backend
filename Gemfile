@@ -10,6 +10,8 @@ gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
 gem 'jbuilder', '~> 2.5'
 gem 'rack-cors'
+gem 'bcrypt'
+gem 'jwt'
 gem 'cancancan', '~> 2.0'
 
 group :development, :test do

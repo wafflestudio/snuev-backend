@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   before_validation :set_email_from_username, on: :create
 
-  validates_presence_of :name, :email, :password_digest
+  validates_presence_of :username, :email, :password_digest
 
   private
 
