@@ -20,6 +20,8 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'guard', require: false
+  gem 'guard-rspec', require: false
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 

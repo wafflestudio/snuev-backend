@@ -9,6 +9,10 @@ module V1ControllerHelper
 
     let(:user) { create(:user) }
     let(:token) { JsonWebToken.encode(user_id: user.id) }
+
+    def json
+      JSON.parse(response.body)
+    end
   end
 end
 
