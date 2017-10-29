@@ -6,6 +6,11 @@ class V1::AuthController < V1::BaseController
     render jsonapi: nil, meta: { auth_token: auth_token }
   end
 
+  def sign_out
+    current_user.update!(last_signed_out_at: DateTime.current)
+    render jsonapi: nil
+  end
+
   private
 
   def auth_params

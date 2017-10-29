@@ -11,8 +11,8 @@ module ExceptionHandler
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
     rescue_from CanCan::AccessDenied, with: :render_forbidden
     rescue_from ExceptionHandler::AuthenticationError, with: :render_unauthorized
-    rescue_from ExceptionHandler::MissingToken, with: :render_invalid_request
-    rescue_from ExceptionHandler::InvalidToken, with: :render_invalid_request
+    rescue_from ExceptionHandler::MissingToken, with: :render_unauthorized
+    rescue_from ExceptionHandler::InvalidToken, with: :render_unauthorized
     rescue_from ExceptionHandler::DuplicateRecord, with: :render_invalid_request
   end
 

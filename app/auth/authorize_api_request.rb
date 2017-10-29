@@ -6,6 +6,9 @@ class AuthorizeApiRequest
   end
 
   def call
+    if user.last_signed_out_at && user.last_signed_out_at.to_i > decoded_auth_token[:iat]
+      raise(ExceptionHandler::InvalidToken, 'Token is invalidated')
+    end
     { user: user }
   end
 
