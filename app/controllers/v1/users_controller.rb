@@ -3,18 +3,27 @@ class V1::UsersController < V1::BaseController
 
   def show
     @user = current_user
+    render jsonapi: @user
   end
 
   def create
     @user = User.create!(user_create_params)
     auth_token = AuthenticateUser.new(@user.username, @user.password).call
-    json_response({ message: 'Account created', auth_token: auth_token }, :created)
+    render jsonapi: nil, meta: { auth_token: auth_token }, status: :created
+  rescue ActiveRecord::RecordNotUnique
+    raise(ExceptionHandler::DuplicateRecord, 'User already exists')
   end
 
   def update
     @user = current_user
     @user.update!(user_update_params)
-    json_response({ user: @user }, :ok)
+    render jsonapi: @user
+  end
+
+  def destroy
+    @user = current_user
+    @user.destroy
+    render jsonapi: @user
   end
 
   private

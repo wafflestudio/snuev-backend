@@ -13,6 +13,7 @@ gem 'rack-cors'
 gem 'bcrypt'
 gem 'jwt'
 gem 'cancancan', '~> 2.0'
+gem 'jsonapi-rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.6'

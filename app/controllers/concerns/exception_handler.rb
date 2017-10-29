@@ -2,6 +2,7 @@ module ExceptionHandler
   extend ActiveSupport::Concern
 
   class AuthenticationError < StandardError; end
+  class DuplicateRecord < StandardError; end
   class MissingToken < StandardError; end
   class InvalidToken < StandardError; end
 
@@ -12,23 +13,24 @@ module ExceptionHandler
     rescue_from ExceptionHandler::AuthenticationError, with: :render_unauthorized
     rescue_from ExceptionHandler::MissingToken, with: :render_invalid_request
     rescue_from ExceptionHandler::InvalidToken, with: :render_invalid_request
+    rescue_from ExceptionHandler::DuplicateRecord, with: :render_invalid_request
   end
 
   private
 
   def render_unauthorized(e)
-    json_response({ message: e.message }, :unauthorized)
+    render jsonapi_errors: { title: e }, status: :unauthorized
   end
 
   def render_invalid_request(e)
-    json_response({ message: e.message }, :unprocessable_entity)
+    render jsonapi_errors: { title: e }, status: :unprocessable_entity
   end
 
   def render_not_found(e)
-    json_response({ message: e.message }, :not_found)
+    render jsonapi_errors: { title: e }, status: :not_found
   end
 
   def render_forbidden(e)
-    json_response({ message: e.message }, :forbidden)
+    render jsonapi_errors: { title: e }, status: :forbidden
   end
 end

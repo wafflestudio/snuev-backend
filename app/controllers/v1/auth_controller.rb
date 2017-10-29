@@ -3,7 +3,7 @@ class V1::AuthController < V1::BaseController
 
   def sign_in
     auth_token = AuthenticateUser.new(auth_params[:username], auth_params[:password]).call
-    json_response(auth_token: auth_token)
+    render jsonapi: nil, meta: { auth_token: auth_token }
   end
 
   private
