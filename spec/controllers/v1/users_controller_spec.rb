@@ -10,16 +10,18 @@ RSpec.describe V1::UsersController, type: :controller do
 
   describe 'POST #create' do
     let(:create_request) { post :create, params: { username: 'user', password: 'password' } }
-    let(:token) { nil }
+    let(:auth_token) { nil }
 
     it { expect(create_request).to be_successful }
     it { expect { create_request }.to change(User, :count).by(1) }
+    it { expect { create_request }.to change { ActionMailer::Base.deliveries.count }.by(1) }
 
     context 'when user already exists' do
       before { create(:user, username: 'user', password: 'password') }
 
       it { expect(create_request).not_to be_successful }
       it { expect { create_request }.not_to change(User, :count) }
+      it { expect { create_request }.not_to change { ActionMailer::Base.deliveries.count } }
     end
   end
 
