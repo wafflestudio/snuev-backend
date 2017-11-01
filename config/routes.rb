@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     resource :user, only: [:show, :create, :update, :destroy] do
       post :sign_in, to: 'auth#sign_in'
       delete :sign_out, to: 'auth#sign_out'
+
+      get :confirm_email
     end
   end
 
