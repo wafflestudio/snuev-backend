@@ -16,7 +16,7 @@ gem 'cancancan', '~> 2.0'
 group :development, :test do
   gem 'rspec-rails', '~> 3.6'
   gem 'rails-controller-testing'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
