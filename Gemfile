@@ -18,7 +18,7 @@ gem 'jsonapi-rails'
 group :development, :test do
   gem 'rspec-rails', '~> 3.6'
   gem 'rails-controller-testing'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'guard', require: false
   gem 'guard-rspec', require: false
