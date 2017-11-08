@@ -10,14 +10,18 @@ gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
 gem 'jbuilder', '~> 2.5'
 gem 'rack-cors'
-gem 'devise_token_auth'
+gem 'bcrypt'
+gem 'jwt'
 gem 'cancancan', '~> 2.0'
+gem 'jsonapi-rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.6'
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
+  gem 'guard', require: false
+  gem 'guard-rspec', require: false
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 

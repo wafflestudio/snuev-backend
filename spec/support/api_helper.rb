@@ -4,17 +4,18 @@ module V1ControllerHelper
   included do
     before do
       request.env['HTTP_ACCEPT'] = 'application/json'
-      request.env['HTTP_UID'] = auth_token['uid']
-      request.env['HTTP_CLIENT'] = auth_token['client']
-      request.env['HTTP_ACCESS_TOKEN'] = auth_token['access-token']
+      request.env['HTTP_AUTHORIZATION'] = token
     end
 
     let(:user) { create(:user) }
-    let(:auth_token) { user.create_new_auth_token.slice('uid', 'client', 'access-token') }
+    let(:token) { JsonWebToken.encode(user_id: user.id) }
+
+    def json
+      JSON.parse(response.body)
+    end
   end
 end
 
 RSpec.configure do |config|
-  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include V1ControllerHelper, type: :controller
 end
