@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe V1::AuthController, type: :controller do
   describe 'POST #sign_in' do
     let(:user) { create(:user, username: 'user', password: 'password') }
-    let(:token) { nil }
+    let(:auth_token) { nil }
     let(:sign_in_request) { post :sign_in, params: { username: 'user', password: 'password' } }
 
     before { user }

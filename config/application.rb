@@ -29,5 +29,7 @@ module SnuevBackend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.action_mailer.default_url_options = { host: ENV['HTTP_HOST'] || 'localhost:3000' }
   end
 end

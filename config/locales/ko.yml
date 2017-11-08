@@ -1,0 +1,5 @@
+ko:
+  user_mailer:
+    confirmation_email:
+      subject: "[SNUEV] 서울대학교 강의평가 서비스 인증 메일"
+      content: 가입해주셔서 감사합니다! 아래의 링크를 이용해 이메일 인증을 완료해 주세요.

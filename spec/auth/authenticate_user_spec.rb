@@ -7,9 +7,9 @@ RSpec.describe AuthenticateUser do
 
   describe '#call' do
     context 'when valid credentials' do
-      let(:token) { valid_auth_obj.call }
+      let(:auth_token) { valid_auth_obj.call }
 
-      it { expect(token).not_to be_nil }
+      it { expect(auth_token).not_to be_nil }
     end
 
     context 'when invalid credentials' do

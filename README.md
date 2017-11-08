@@ -28,11 +28,32 @@ After cloning the codebase,
 
 And the server will be running at http://localhost:3001.
 
+### Configuring environment variables
+
+| Environment Variable |                                           |
+|:---------------------|:------------------------------------------|
+| DATABASE_URL         | -                                         |
+| HTTP_HOST            | Application host. Mostly used by mailers. |
+| SECRET_KEY_BASE      | -                                         |
+| SMTP_ADDRESS         | Default: `smtp.gmail.com`                 |
+| SMTP_DOMAIN          | -                                         |
+| SMTP_PORT            | Default: `587`                            |
+| SMTP_USER_NAME       | -                                         |
+| SMTP_PASSWORD        | -                                         |
+
 ## Running spec
 
 ```bash
   docker-compose -f docker-compose.test.yml run test rails db:create db:migrate # initial setup
   docker-compose -f docker-compose.test.yml run test
+```
+
+## Running spec using guard
+
+You can run rspec using guard to automatically run spec when codebase changes.
+
+```bash
+  docker-compose -f docker-compose.test.yml run test guard -c
 ```
 
 ## Contributing
