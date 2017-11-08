@@ -4,7 +4,7 @@ class V1::EvaluationsController < V1::BaseController
 
   def index
     authorize! :read, Evaluation
-    @evaluations = @lecture.evaluations
+    @evaluations = @lecture.evaluations.page params[:page]
     render jsonapi: @evaluations
   end
 
