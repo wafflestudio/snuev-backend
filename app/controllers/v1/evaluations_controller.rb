@@ -5,23 +5,24 @@ class V1::EvaluationsController < V1::BaseController
   def index
     authorize! :read, Evaluation
     @evaluations = @lecture.evaluations
+    render jsonapi: @evaluations
   end
 
   def create
     @evaluation = Evaluation.create!(evaluation_params.merge(user: current_user, lecture: @lecture))
-    render :show
+    render jsonapi: @evaluation
   end
 
   def update
     authorize! :update, @evaluation
     @evaluation.update!(evaluation_params)
-    render :show
+    render jsonapi: @evaluation
   end
 
   def destroy
     authorize! :destroy, @evaluation
     @evaluation.destroy
-    render :show
+    render jsonapi: @evaluation
   end
 
   private
