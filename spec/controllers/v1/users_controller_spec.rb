@@ -4,8 +4,19 @@ RSpec.describe V1::UsersController, type: :controller do
   describe 'GET #show' do
     let(:show_request) { get :show }
 
-    it { show_request; expect(assigns(:user)).to eq(user)}
-    it { expect(show_request).to be_successful }
+    context 'when confirmed' do
+      it { show_request; expect(assigns(:user)).to eq(user)}
+      it { expect(show_request).to be_successful }
+      it { show_request; expect(json.dig('data', 'attributes', 'is_confirmed')).to eq(true) }
+    end
+
+    context 'when not confirmed' do
+      let(:user) { create(:user, confirmed_at: nil) }
+
+      it { show_request; expect(assigns(:user)).to eq(user)}
+      it { expect(show_request).to be_successful }
+      it { show_request; expect(json.dig('data', 'attributes', 'is_confirmed')).to eq(false) }
+    end
   end
 
   describe 'POST #create' do

@@ -9,6 +9,7 @@ class V1::EvaluationsController < V1::BaseController
   end
 
   def create
+    authorize! :create, Evaluation
     @evaluation = Evaluation.new(evaluation_params.merge(user: current_user, lecture: @lecture))
     if @evaluation.save
       render jsonapi: @evaluation
