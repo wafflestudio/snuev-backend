@@ -8,16 +8,27 @@ services:
     links:
       - db
     volumes:
-      - .:/usr/src/app
-      - bundle:/bundle
+      - '.:/usr/src/app'
+      - 'bundle:/bundle'
     environment:
       - RAILS_ENV=development
       - DATABASE_URL=postgres://postgres@db/snuev
+      - ELASTIC_SEARCH_URL=es:9200
     env_file: .env
   db:
     image: postgres:9.6
     volumes:
       - 'postgres:/var/lib/postgresql/data'
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.3
+    environment:
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=false
+    volumes:
+      - 'esdata:/usr/share/elasticsearch/data'
+    ports:
+      - '9200:9200'
 volumes:
   bundle:
   postgres:
+  esdata:
