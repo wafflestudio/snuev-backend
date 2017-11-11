@@ -4,7 +4,9 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    can [:read, :create], Evaluation
+    if user.confirmed?
+      can [:read, :create], Evaluation
+    end
     can [:update, :destroy], Evaluation, user_id: user.id
   end
 end

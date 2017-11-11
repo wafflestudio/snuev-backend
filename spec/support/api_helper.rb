@@ -7,7 +7,7 @@ module V1ControllerHelper
       request.env['HTTP_AUTHORIZATION'] = auth_token
     end
 
-    let(:user) { create(:user) }
+    let(:user) { create(:user, :confirmed) }
     let(:auth_token) { JsonWebToken.encode(user_id: user.id) }
 
     def json

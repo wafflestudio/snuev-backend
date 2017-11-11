@@ -20,6 +20,12 @@ RSpec.describe V1::EvaluationsController, type: :controller do
       it { expect(index_request).to be_successful }
       it { index_request; expect(assigns(:evaluations)).to eq(evaluations) }
     end
+
+    context 'when user not confirmed' do
+      let(:user) { create(:user) }
+
+      it { expect(index_request).not_to be_successful }
+    end
   end
 
   describe '#POST create' do
@@ -38,6 +44,12 @@ RSpec.describe V1::EvaluationsController, type: :controller do
 
       it { expect(create_request).not_to be_successful }
       it { expect { create_request }.not_to change(lecture.evaluations, :count) }
+    end
+
+    context 'when user not confirmed' do
+      let(:user) { create(:user) }
+
+      it { expect(create_request).not_to be_successful }
     end
   end
 

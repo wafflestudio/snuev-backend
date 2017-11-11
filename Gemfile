@@ -8,7 +8,7 @@ end
 gem 'rails', '~> 5.1.4'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
-gem 'jbuilder', '~> 2.5'
+gem 'kaminari'
 gem 'rack-cors'
 gem 'bcrypt'
 gem 'jwt'
