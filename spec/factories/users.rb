@@ -1,6 +1,10 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
-    sequence(:email) { |n| "email#{n}@snu.ac.kr" }
+    sequence(:username) { |n| "username#{n}" }
     password "password"
+
+    trait :confirmed do
+      confirmed_at { Time.now }
+    end
   end
 end

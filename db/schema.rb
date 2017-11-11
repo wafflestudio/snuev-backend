@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171022122728) do
+ActiveRecord::Schema.define(version: 20171108153726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(version: 20171022122728) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "departments_professors", id: false, force: :cascade do |t|
+    t.bigint "department_id"
+    t.bigint "professor_id"
+    t.index ["department_id"], name: "index_departments_professors_on_department_id"
+    t.index ["professor_id"], name: "index_departments_professors_on_professor_id"
+  end
+
   create_table "evaluations", force: :cascade do |t|
     t.integer "user_id"
     t.integer "lecture_id"
@@ -55,6 +62,8 @@ ActiveRecord::Schema.define(version: 20171022122728) do
     t.float "grading", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.integer "professor_id"
     t.index ["course_id"], name: "index_lectures_on_course_id"
   end
 
@@ -74,28 +83,16 @@ ActiveRecord::Schema.define(version: 20171022122728) do
   create_table "users", force: :cascade do |t|
     t.string "nickname"
     t.string "username", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet "current_sign_in_ip"
-    t.inet "last_sign_in_ip"
+    t.string "password_digest", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email"
+    t.datetime "last_signed_out_at"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "provider", default: "email", null: false
-    t.string "uid", default: "", null: false
-    t.string "email"
-    t.json "tokens"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 

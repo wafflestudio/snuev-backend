@@ -1,0 +1,21 @@
+version: '3'
+services:
+  test:
+    build: .
+    command: bundle exec rspec
+    links:
+      - db
+    volumes:
+      - .:/usr/src/app
+      - bundle:/bundle
+    environment:
+      - RAILS_ENV=test
+      - DATABASE_URL=postgres://postgres@db/snuev_test
+    env_file: .env
+  db:
+    image: postgres:9.6
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+volumes:
+  bundle:
+  postgres:

@@ -11,9 +11,10 @@ services:
       - '.:/usr/src/app'
       - 'bundle:/bundle'
     environment:
-      - RAILS_ENV=development
       - DATABASE_URL=postgres://postgres@db/snuev
       - ELASTIC_SEARCH_URL=es:9200
+      - HTTP_HOST=localhost:3001
+      - RAILS_ENV=development
     env_file: .env
   db:
     image: postgres:9.6
