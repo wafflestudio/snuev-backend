@@ -1,8 +1,18 @@
 ko:
   activerecord:
+    attributes:
+      evaluation:
+        score: '평점'
+        easiness: '난이도'
+        grading: '학점만족도'
     errors:
       messages:
-        record_invalid: '내용이 잘못되었습니다.'
+        record_invalid: '내용이 잘못되었습니다. %{errors}'
+      models:
+        evaluation:
+          attributes:
+            user:
+              taken: "이미 강의평을 작성하셨습니다."
   user_mailer:
     confirmation_email:
       subject: '[SNUEV] 서울대학교 강의평가 서비스 인증 메일'
