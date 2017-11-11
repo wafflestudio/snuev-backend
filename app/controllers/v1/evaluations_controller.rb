@@ -10,8 +10,12 @@ class V1::EvaluationsController < V1::BaseController
 
   def create
     authorize! :create, Evaluation
-    @evaluation = Evaluation.create!(evaluation_params.merge(user: current_user, lecture: @lecture))
-    render jsonapi: @evaluation
+    @evaluation = Evaluation.new(evaluation_params.merge(user: current_user, lecture: @lecture))
+    if @evaluation.save
+      render jsonapi: @evaluation
+    else
+      render jsonapi_errors: @evaluation.errors, status: :unprocessable_entity
+    end
   end
 
   def update

@@ -1,4 +1,13 @@
 en:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: 'Record is invalid.'
+      models:
+        evaluation:
+          attributes:
+            user:
+              taken: "already evaluated the lecture."
   user_mailer:
     confirmation_email:
       subject: "[SNUEV] Registration Confirmation"
