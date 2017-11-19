@@ -2,8 +2,7 @@ default: &default
   host: <%= ENV['ELASTIC_SEARCH_URL'] %>
 test:
   <<: *default
-  #host: 'localhost:9250'
-  #prefix: 'test'
+  prefix: 'test'
 development:
   <<: *default
 production:
