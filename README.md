@@ -41,6 +41,7 @@ And the server will be running at http://localhost:3001.
 | SMTP_PORT            | Default: `587`                            |
 | SMTP_USER_NAME       | -                                         |
 | SMTP_PASSWORD        | -                                         |
+| WEB_BASE             | Base url of web client.                   |
 
 ## Running spec
 
