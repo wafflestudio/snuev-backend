@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  describe '#valid?' do
+    it { expect(build(:user, password: 'short')).not_to be_valid }
+    it { expect(build(:user, password: 'long_password')).to be_valid }
+  end
+
   describe '#set_email_from_username' do
     let(:user) { build(:user, username: 'user') }
 

@@ -7,6 +7,7 @@ class User < ApplicationRecord
   before_validation :set_confirmation_token, on: :create
 
   validates_presence_of :username, :email, :password_digest
+  validates :password, length: { minimum: 8 }, allow_nil: true
 
   def confirmed?
     confirmed_at.present?
