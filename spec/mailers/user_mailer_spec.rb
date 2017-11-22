@@ -5,6 +5,8 @@ RSpec.describe UserMailer, type: :mailer do
     let(:user) { create(:user) }
     let(:mail) { described_class.confirmation_email(user).deliver_now }
 
+    before { user.issue_confirmation_token }
+
     it { expect(mail.subject).not_to be_blank }
     it { expect(mail.to).to eq([user.email]) }
     it { expect(mail.body.encoded).to match(user.confirmation_token) }

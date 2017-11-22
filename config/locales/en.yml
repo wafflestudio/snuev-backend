@@ -1,5 +1,8 @@
 en:
   messages:
+    confirmation_delivered: 'Confirmation email has been sent to your mysnu account.'
+    confirmation_expired: 'Your confirmation request is expired. Try again.'
+    confirmation_successful: 'Successfully confirmed your mysnu account.'
     password_reset_delivered: 'Reset email has been sent to your mysnu account.'
     password_reset_expired: 'Your password reset request is expired. Try again.'
     password_updated: 'Successfully updated password.'

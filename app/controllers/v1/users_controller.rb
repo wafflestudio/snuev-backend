@@ -9,6 +9,7 @@ class V1::UsersController < V1::BaseController
   def create
     @user = User.create!(user_create_params)
     auth_token = AuthenticateUser.new(@user.username, @user.password).call
+    @user.issue_confirmation_token
     UserMailer.confirmation_email(@user).deliver_now
     render jsonapi: nil, meta: { auth_token: auth_token }, status: :created
   rescue ActiveRecord::RecordNotUnique
@@ -25,13 +26,6 @@ class V1::UsersController < V1::BaseController
     @user = current_user
     @user.destroy
     render jsonapi: @user
-  end
-
-  def confirm_email
-    @user = User.find_by(confirmation_token: params[:confirmation_token])
-    raise(ExceptionHandler::InvalidConfirmationToken, 'Invalid Email Confirmation') unless @user
-    @user.confirm_email!
-    render jsonapi: nil, meta: { message: 'Email confirmation successful' }
   end
 
   private
