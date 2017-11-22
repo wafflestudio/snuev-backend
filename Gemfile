@@ -14,6 +14,7 @@ gem 'bcrypt'
 gem 'jwt'
 gem 'cancancan', '~> 2.0'
 gem 'jsonapi-rails'
+gem 'newrelic_rpm'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.6'
