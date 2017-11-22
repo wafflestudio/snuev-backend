@@ -6,6 +6,7 @@ module ExceptionHandler
   class MissingToken < StandardError; end
   class InvalidToken < StandardError; end
   class ExpiredSignature < StandardError; end
+  class InvalidConfirmationToken < StandardError; end
 
   included do
     rescue_from ActiveRecord::RecordInvalid, with: :render_invalid_request
@@ -16,6 +17,7 @@ module ExceptionHandler
     rescue_from ExceptionHandler::InvalidToken, with: :render_unauthorized
     rescue_from ExceptionHandler::ExpiredSignature, with: :render_unauthorized
     rescue_from ExceptionHandler::DuplicateRecord, with: :render_invalid_request
+    rescue_from ExceptionHandler::InvalidConfirmationToken, with: :render_forbidden
   end
 
   private

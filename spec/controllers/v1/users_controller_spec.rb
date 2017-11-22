@@ -75,5 +75,11 @@ RSpec.describe V1::UsersController, type: :controller do
       it { expect(confirm_email_request).to be_successful }
       it { expect { confirm_email_request }.not_to change { user.reload.confirmed? } }
     end
+
+    context 'when confirmation token is invalid' do
+      let(:confirm_email_request) { get :confirm_email, params: { confirmation_token: 'invalid' } }
+
+      it { expect(confirm_email_request).not_to be_successful }
+    end
   end
 end
