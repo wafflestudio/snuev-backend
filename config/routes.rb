@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       delete :sign_out, to: 'auth#sign_out'
 
       get :confirm_email
+
+      resource :reset_password, only: [:create, :update]
     end
   end
 

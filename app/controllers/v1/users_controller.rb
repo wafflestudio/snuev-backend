@@ -9,7 +9,7 @@ class V1::UsersController < V1::BaseController
   def create
     @user = User.create!(user_create_params)
     auth_token = AuthenticateUser.new(@user.username, @user.password).call
-    UserMailer.confirmation_email(@user).deliver
+    UserMailer.confirmation_email(@user).deliver_now
     render jsonapi: nil, meta: { auth_token: auth_token }, status: :created
   rescue ActiveRecord::RecordNotUnique
     raise(ExceptionHandler::DuplicateRecord, 'User already exists')
