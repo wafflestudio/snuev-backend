@@ -33,6 +33,8 @@ RSpec.describe V1::CoursesController, type: :controller do
     let(:search_request) { get :search, params: { q: 'Course' } }
     let(:search_request_with_empty_page) { get :search, params: { q: 'Course', page: 2 } }
 
+    before { Chewy.massacre }
+
     it { expect(search_request).to be_successful }
     it { search_request; expect(assigns(:courses)).to be_empty }
 

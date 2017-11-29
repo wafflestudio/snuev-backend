@@ -1,4 +1,4 @@
-class SearchIndex < Chewy::Index
+class LecturesIndex < Chewy::Index
   settings analysis: {
     analyzer: {
       name: {
@@ -7,10 +7,6 @@ class SearchIndex < Chewy::Index
       }
     }
   }
-
-  define_type Course do
-    field :name, analyzer: 'name'
-  end
 
   define_type Lecture.includes(:course, :professor) do
     field :course do

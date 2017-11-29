@@ -2,6 +2,6 @@ class Course < ApplicationRecord
   has_many :lectures
   belongs_to :department
 
-  update_index('search#course') { self }
-  update_index('search#lecture') { lectures }
+  update_index('courses#course') { self }
+  update_index('lectures#lecture') { lectures }
 end

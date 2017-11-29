@@ -1,6 +1,6 @@
 class V1::CoursesController < V1::BaseController
   def index
-   	@courses = Course.page(params[:page])
+    @courses = Course.page(params[:page])
     render jsonapi: @courses
   end
 
@@ -12,7 +12,7 @@ class V1::CoursesController < V1::BaseController
     query = params[:q].to_s.downcase
     page = params[:page].to_i || 0
 
-   	@courses = SearchIndex::Course
+    @courses = CoursesIndex::Course
     .query(wildcard: { _all: { value: "*#{query}*" } })
     .page(page)
     .objects

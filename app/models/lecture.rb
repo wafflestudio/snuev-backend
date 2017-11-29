@@ -3,7 +3,7 @@ class Lecture < ApplicationRecord
   belongs_to :professor
   has_many :evaluations
 
-  update_index('search#lecture') { self }
+  update_index('lectures#lecture') { self }
 
   def update_scores
     update(
