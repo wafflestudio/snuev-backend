@@ -1,5 +1,8 @@
 ko:
   messages:
+    confirmation_delivered: '인증 메일이 전송되었습니다.'
+    confirmation_expired: '인증 URL이 만료되었습니다. 다시 시도해 주세요'
+    confirmation_successful: '마이스누 계정 인증에 성공하였습니다.'
     password_reset_delivered: '비밀번호 초기화 메일이 마이스누 계정으로 발송되었습니다.'
     password_reset_expired: '비밀번호 초기화 링크가 만료되었습니다. 다시 시도해 주세요.'
     password_updated: '비밀번호가 성공적으로 변경되었습니다.'

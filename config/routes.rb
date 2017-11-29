@@ -8,9 +8,8 @@ Rails.application.routes.draw do
       post :sign_in, to: 'auth#sign_in'
       delete :sign_out, to: 'auth#sign_out'
 
-      get :confirm_email
-
       resource :reset_password, only: [:create, :update]
+      resource :confirmation, path: 'confirm_email', only: [:create, :update]
     end
   end
 
