@@ -3,6 +3,8 @@ class Lecture < ApplicationRecord
   belongs_to :professor
   has_many :evaluations
 
+  update_index('lectures#lecture') { self }
+
   def update_scores
     update(
       score: evaluations.average(:score) || 0,

@@ -14,5 +14,8 @@
 !/tmp/.keep
 
 .byebug_history
+
+.swp
+.swo
 .env
 coverage

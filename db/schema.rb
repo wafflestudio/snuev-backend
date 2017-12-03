@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20171112065743) do
     t.integer "lab_unit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "code"
+    t.integer "credit"
   end
 
   create_table "departments", force: :cascade do |t|

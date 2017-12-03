@@ -1,0 +1,9 @@
+default: &default
+  host: <%= ENV['ELASTIC_SEARCH_URL'] %>
+test:
+  <<: *default
+  prefix: 'test'
+development:
+  <<: *default
+production:
+  <<: *default
