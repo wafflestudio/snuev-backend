@@ -1,4 +1,11 @@
 en:
+  messages:
+    confirmation_delivered: 'Confirmation email has been sent to your mysnu account.'
+    confirmation_expired: 'Your confirmation request is expired. Try again.'
+    confirmation_successful: 'Successfully confirmed your mysnu account.'
+    password_reset_delivered: 'Reset email has been sent to your mysnu account.'
+    password_reset_expired: 'Your password reset request is expired. Try again.'
+    password_updated: 'Successfully updated password.'
   activerecord:
     errors:
       messages:
@@ -12,3 +19,7 @@ en:
     confirmation_email:
       subject: "[SNUEV] Registration Confirmation"
       content: Thanks for registering! Click URL below to complete confirmation.
+    reset_email:
+      subject: '[SNUEV] Password reset'
+      content: 'Click URL below to reset your password.'
+      ignore_when_not_requested: 'If you did not request your password to be reset, just ignore this email and your password will continue to stay the same.'

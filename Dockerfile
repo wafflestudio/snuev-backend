@@ -3,6 +3,19 @@ FROM ruby:2.4.1
 RUN apt-get update -qq && \
     apt-get install -y build-essential
 
+# Add ko locale
+RUN apt-get install -y locales \
+    sed -i -e 's/# ko_KR.UTF-8 UTF-8/ko_KR.UTF-8 UTF-8/' /etc/locale.gen \
+    echo 'LANG="ko_KR.UTF-8 UTF-8"'>/etc/default/locale \
+    dpkg-reconfigure --frontend=noninteractive locale \
+    echo 'export LANG=ko_KR.utf-8' >> /etc/bash.bashrc
+#    locale-gen ko_KR.UTF-8
+
+
+ENV LANG ko_KR.UTF-8 \
+    LANGUAGE ko_KR.UTF-8 \
+    LC_ALL ko_KR.UTF-8
+
 ENV APP_PATH /usr/src/app
 RUN mkdir -p $APP_PATH
 WORKDIR $APP_PATH
