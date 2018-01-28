@@ -1,4 +1,6 @@
 class V1::LecturesController < V1::BaseController
+  skip_before_action :authorize_request
+
   def index
     @lectures = Lecture.includes(:course, :professor).page(params[:page])
     render jsonapi: @lectures,

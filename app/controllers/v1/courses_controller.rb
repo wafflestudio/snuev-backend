@@ -1,4 +1,6 @@
 class V1::CoursesController < V1::BaseController
+  skip_before_action :authorize_request
+
   def index
     @courses = Course.page(params[:page])
     render jsonapi: @courses
