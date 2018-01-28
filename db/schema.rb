@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171112065743) do
+ActiveRecord::Schema.define(version: 20180128125255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20171112065743) do
     t.datetime "updated_at", null: false
     t.string "code"
     t.integer "credit"
+    t.string "slug"
+    t.index ["slug"], name: "index_courses_on_slug", unique: true
   end
 
   create_table "departments", force: :cascade do |t|
@@ -51,8 +53,22 @@ ActiveRecord::Schema.define(version: 20171112065743) do
     t.integer "grading", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
     t.index ["lecture_id"], name: "index_evaluations_on_lecture_id"
+    t.index ["slug"], name: "index_evaluations_on_slug", unique: true
     t.index ["user_id"], name: "index_evaluations_on_user_id"
+  end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
   create_table "lectures", force: :cascade do |t|
@@ -64,13 +80,17 @@ ActiveRecord::Schema.define(version: 20171112065743) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.integer "professor_id"
+    t.string "slug"
     t.index ["course_id"], name: "index_lectures_on_course_id"
+    t.index ["slug"], name: "index_lectures_on_slug", unique: true
   end
 
   create_table "professors", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["slug"], name: "index_professors_on_slug", unique: true
   end
 
   create_table "semesters", force: :cascade do |t|

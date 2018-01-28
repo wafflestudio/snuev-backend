@@ -15,6 +15,7 @@ gem 'jwt'
 gem 'cancancan', '~> 2.0'
 gem 'jsonapi-rails'
 gem 'chewy'
+gem 'friendly_id', '~> 5.1.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.6'

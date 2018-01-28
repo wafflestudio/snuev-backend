@@ -1,4 +1,7 @@
 class Lecture < ApplicationRecord
+  extend FriendlyId
+  friendly_id :name, use: [:slugged, :finders]
+
   belongs_to :course
   belongs_to :professor
   has_many :evaluations

@@ -1,5 +1,6 @@
 class SerializableEvaluation < JSONAPI::Serializable::Resource
   type 'evaluations'
+  id { @object.friendly_id }
   attribute :comment
   attribute :score
   attribute :easiness

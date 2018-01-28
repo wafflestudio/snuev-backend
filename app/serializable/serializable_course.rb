@@ -1,5 +1,6 @@
 class SerializableCourse < JSONAPI::Serializable::Resource
   type 'courses'
+  id { @object.friendly_id }
   attribute :name
   attribute :category
   attribute :target_grade

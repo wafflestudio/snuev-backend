@@ -1,4 +1,7 @@
 class Evaluation < ApplicationRecord
+  extend FriendlyId
+  friendly_id :preview, use: [:slugged, :finders]
+
   belongs_to :lecture
   belongs_to :user
 
@@ -12,6 +15,10 @@ class Evaluation < ApplicationRecord
   after_destroy :update_lecture_scores
 
   private
+
+  def preview
+    self.comment.to_s[0...10]
+  end
 
   def update_lecture_scores
     lecture.update_scores
