@@ -14,6 +14,7 @@ gem 'bcrypt'
 gem 'jwt'
 gem 'cancancan', '~> 2.0'
 gem 'jsonapi-rails'
+gem 'newrelic_rpm'
 gem 'chewy'
 
 group :development, :test do

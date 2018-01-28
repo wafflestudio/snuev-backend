@@ -31,17 +31,18 @@ And the server will be running at http://localhost:3001.
 
 ### Configuring environment variables
 
-| Environment Variable |                                           |
-|:---------------------|:------------------------------------------|
-| DATABASE_URL         | -                                         |
-| HTTP_HOST            | Application host. Mostly used by mailers. |
-| SECRET_KEY_BASE      | -                                         |
-| SMTP_ADDRESS         | Default: `smtp.gmail.com`                 |
-| SMTP_DOMAIN          | -                                         |
-| SMTP_PORT            | Default: `587`                            |
-| SMTP_USER_NAME       | -                                         |
-| SMTP_PASSWORD        | -                                         |
-| WEB_BASE             | Base url of web client.                   |
+| Environment Variable  |                                           |
+|:----------------------|:------------------------------------------|
+| DATABASE_URL          | -                                         |
+| HTTP_HOST             | Application host. Mostly used by mailers. |
+| SECRET_KEY_BASE       | -                                         |
+| SMTP_ADDRESS          | Default: `smtp.gmail.com`                 |
+| SMTP_DOMAIN           | -                                         |
+| SMTP_PORT             | Default: `587`                            |
+| SMTP_USER_NAME        | -                                         |
+| SMTP_PASSWORD         | -                                         |
+| WEB_BASE              | Base url of web client.                   |
+| NEW_RELIC_LICENSE_KEY | New Relic license key.                    |
 
 ## Running spec
 
