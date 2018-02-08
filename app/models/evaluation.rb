@@ -1,5 +1,5 @@
 class Evaluation < ApplicationRecord
-  belongs_to :lecture
+  belongs_to :lecture, counter_cache: true
   belongs_to :user
 
   validates :comment, length: { minimum: 10 }

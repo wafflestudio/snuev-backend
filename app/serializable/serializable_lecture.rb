@@ -6,6 +6,7 @@ class SerializableLecture < JSONAPI::Serializable::Resource
   attribute :created_at
   attribute :updated_at
   attribute :name
+  attribute :evaluations_count
   has_one :course
   has_one :professor
 end
