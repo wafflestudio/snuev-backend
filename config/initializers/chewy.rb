@@ -1,4 +1,4 @@
-Chewy.logger = Logger.new(STDOUT)
+Chewy.logger = Logger.new(STDOUT) unless Rails.env.test?
 
 Chewy.root_strategy = :atomic
 
