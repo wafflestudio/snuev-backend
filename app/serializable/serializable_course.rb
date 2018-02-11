@@ -8,6 +8,6 @@ class SerializableCourse < JSONAPI::Serializable::Resource
   attribute :lab_unit
   attribute :created_at
   attribute :updated_at
-  has_one :department
+  belongs_to :department
   has_many :lectures
 end
