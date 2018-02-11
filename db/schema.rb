@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171112065743) do
+ActiveRecord::Schema.define(version: 20180208140441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20171112065743) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.integer "professor_id"
+    t.integer "evaluations_count", default: 0
     t.index ["course_id"], name: "index_lectures_on_course_id"
   end
 
