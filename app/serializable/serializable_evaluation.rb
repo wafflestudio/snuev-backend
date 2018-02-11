@@ -6,6 +6,7 @@ class SerializableEvaluation < JSONAPI::Serializable::Resource
   attribute :grading
   attribute :created_at
   attribute :updated_at
+  belongs_to :semester
 
   attribute :can_update do
     @current_ability.can? :update, @object
