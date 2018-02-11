@@ -55,6 +55,19 @@ ActiveRecord::Schema.define(version: 20180208140441) do
     t.index ["user_id"], name: "index_evaluations_on_user_id"
   end
 
+  create_table "lecture_sessions", force: :cascade do |t|
+    t.integer "target_grade"
+    t.string "schedule"
+    t.string "classroom"
+    t.integer "capacity"
+    t.bigint "lecture_id"
+    t.bigint "semester_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lecture_id"], name: "index_lecture_sessions_on_lecture_id"
+    t.index ["semester_id"], name: "index_lecture_sessions_on_semester_id"
+  end
+
   create_table "lectures", force: :cascade do |t|
     t.integer "course_id"
     t.float "score", default: 0.0

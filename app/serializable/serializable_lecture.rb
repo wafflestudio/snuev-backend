@@ -9,4 +9,5 @@ class SerializableLecture < JSONAPI::Serializable::Resource
   attribute :evaluations_count
   has_one :course
   has_one :professor
+  has_many :semesters
 end

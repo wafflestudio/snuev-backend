@@ -2,15 +2,17 @@ class V1::LecturesController < V1::BaseController
   skip_before_action :authorize_request
 
   def index
-    @lectures = Lecture.includes(:professor, course: :department).page(params[:page])
+    @lectures = Lecture
+                .includes(:semesters, :professor, course: :department)
+                .page(params[:page])
     render jsonapi: @lectures,
-           include: [{ course: [:department] }, :professor]
+           include: [{ course: [:department] }, :semesters, :professor]
   end
 
   def show
     @lecture = Lecture.find(params[:id])
     render jsonapi: @lecture,
-           include: [{ course: [:department] }, :professor]
+           include: [{ course: [:department] }, :semesters, :professor]
   end
 
   def search
@@ -22,12 +24,12 @@ class V1::LecturesController < V1::BaseController
     page = params[:page].to_i || 0
 
     @lectures = LecturesIndex::Lecture
-                .load(scope: -> { includes(:professor, course: :department) })
+                .load(scope: -> { includes(:semesters, :professor, course: :department) })
                 .query(wildcard: { _all: { value: "*#{query}*" } })
                 .page(page)
                 .objects
 
     render jsonapi: @lectures,
-           include: [{ course: [:department] }, :professor]
+           include: [{ course: [:department] }, :semesters, :professor]
   end
 end
