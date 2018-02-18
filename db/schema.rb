@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20180218035442) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.integer "semester_id"
     t.index ["lecture_id"], name: "index_evaluations_on_lecture_id"
     t.index ["slug"], name: "index_evaluations_on_slug", unique: true
     t.index ["user_id"], name: "index_evaluations_on_user_id"
@@ -68,6 +69,19 @@ ActiveRecord::Schema.define(version: 20180218035442) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "lecture_sessions", force: :cascade do |t|
+    t.integer "target_grade"
+    t.string "schedule"
+    t.string "classroom"
+    t.integer "capacity"
+    t.bigint "lecture_id"
+    t.bigint "semester_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lecture_id"], name: "index_lecture_sessions_on_lecture_id"
+    t.index ["semester_id"], name: "index_lecture_sessions_on_semester_id"
   end
 
   create_table "lectures", force: :cascade do |t|
@@ -87,6 +101,7 @@ ActiveRecord::Schema.define(version: 20180218035442) do
     t.string "remark"
     t.string "lang"
     t.string "status"
+    t.integer "evaluations_count", default: 0
     t.index ["course_id"], name: "index_lectures_on_course_id"
     t.index ["slug"], name: "index_lectures_on_slug", unique: true
   end

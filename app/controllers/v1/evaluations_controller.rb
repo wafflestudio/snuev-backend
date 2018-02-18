@@ -4,15 +4,15 @@ class V1::EvaluationsController < V1::BaseController
 
   def index
     authorize! :read, Evaluation
-    @evaluations = @lecture.evaluations.page params[:page]
-    render jsonapi: @evaluations
+    @evaluations = @lecture.evaluations.includes(:semester).page(params[:page])
+    render jsonapi: @evaluations, include: [:semester]
   end
 
   def create
     authorize! :create, Evaluation
     @evaluation = Evaluation.new(evaluation_params.merge(user: current_user, lecture: @lecture))
     if @evaluation.save
-      render jsonapi: @evaluation
+      render jsonapi: @evaluation, include: [:semester]
     else
       render jsonapi_errors: @evaluation.errors, status: :unprocessable_entity
     end
@@ -21,13 +21,13 @@ class V1::EvaluationsController < V1::BaseController
   def update
     authorize! :update, @evaluation
     @evaluation.update!(evaluation_params)
-    render jsonapi: @evaluation
+    render jsonapi: @evaluation, include: [:semester]
   end
 
   def destroy
     authorize! :destroy, @evaluation
     @evaluation.destroy
-    render jsonapi: @evaluation
+    render jsonapi: @evaluation, include: [:semester]
   end
 
   private
@@ -41,6 +41,6 @@ class V1::EvaluationsController < V1::BaseController
   end
 
   def evaluation_params
-    params.require(:evaluation).permit(:comment, :score, :easiness, :grading)
+    params.require(:evaluation).permit(:comment, :score, :easiness, :grading, :semester_id)
   end
 end
