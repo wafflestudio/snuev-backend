@@ -14,8 +14,12 @@ class Lecture < ApplicationRecord
         .select('lectures.*, count(bookmarks.*) > 0 as bookmarked')
         .group('lectures.id')
     else
-      select('lectures.*, false as bookmarked')
+      where(nil)
     end
+  end
+
+  def bookmarked
+    self[:bookmarked] || false
   end
 
   def update_scores

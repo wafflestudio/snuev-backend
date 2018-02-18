@@ -1,8 +1,14 @@
 class V1::LecturesController < V1::BaseController
-  skip_before_action :authorize_request
+  skip_before_action :authorize_request, except: :bookmarked
 
   def index
     @lectures = lecture_scope.page(params[:page])
+    render jsonapi: @lectures,
+           include: [{ course: [:department] }, :semesters, :professor]
+  end
+
+  def bookmarked
+    @lectures = lecture_scope.where(id: current_user.bookmarks.select(:lecture_id)).page(params[:page])
     render jsonapi: @lectures,
            include: [{ course: [:department] }, :semesters, :professor]
   end
@@ -34,7 +40,6 @@ class V1::LecturesController < V1::BaseController
   protected
 
   def lecture_scope
-    Lecture.with_bookmark(current_user)
-           .includes(:semesters, :professor, course: :department)
+    Lecture.with_bookmark(current_user).includes(:semesters, :professor, course: :department)
   end
 end
