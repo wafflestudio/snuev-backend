@@ -1,7 +1,4 @@
 class Evaluation < ApplicationRecord
-  extend FriendlyId
-  friendly_id :preview, use: [:slugged, :finders]
-
   belongs_to :lecture, counter_cache: true
   belongs_to :semester, optional: true
   belongs_to :user
