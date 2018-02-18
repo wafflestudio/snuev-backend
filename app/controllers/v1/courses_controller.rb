@@ -2,8 +2,9 @@ class V1::CoursesController < V1::BaseController
   skip_before_action :authorize_request
 
   def index
-    @courses = Course.page(params[:page])
-    render jsonapi: @courses
+    @courses = Course.includes(:department).page(params[:page])
+    render jsonapi: @courses,
+           include: [:department]
   end
 
   def search
@@ -15,10 +16,12 @@ class V1::CoursesController < V1::BaseController
     page = params[:page].to_i || 0
 
     @courses = CoursesIndex::Course
-    .query(wildcard: { _all: { value: "*#{query}*" } })
-    .page(page)
-    .objects
+               .load(scope: -> { includes(:department) })
+               .query(wildcard: { _all: { value: "*#{query}*" } })
+               .page(page)
+               .objects
 
-    render jsonapi: @courses
+    render jsonapi: @courses,
+           include: [:department]
   end
 end

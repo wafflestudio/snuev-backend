@@ -2,6 +2,8 @@ class Lecture < ApplicationRecord
   belongs_to :course
   belongs_to :professor
   has_many :evaluations
+  has_many :lecture_sessions
+  has_many :semesters, through: :lecture_sessions
 
   update_index('lectures#lecture') { self }
 
