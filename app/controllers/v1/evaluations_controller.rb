@@ -1,10 +1,16 @@
 class V1::EvaluationsController < V1::BaseController
-  before_action :find_lecture
+  before_action :find_lecture, except: :mine
   before_action :find_evaluation, only: [:update, :destroy]
 
   def index
     authorize! :read, Evaluation
     @evaluations = @lecture.evaluations.includes(:semester).page(params[:page])
+    render jsonapi: @evaluations, include: [:semester]
+  end
+
+  def mine
+    authorize! :read, Evaluation
+    @evaluations = current_user.evaluations.includes(:semester).page(params[:page])
     render jsonapi: @evaluations, include: [:semester]
   end
 

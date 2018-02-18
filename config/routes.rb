@@ -9,6 +9,12 @@ Rails.application.routes.draw do
       get :search, on: :collection
     end
 
+    resources :evaluations, only: [] do
+      collection do
+        get :mine
+      end
+    end
+
     resource :user, only: [:show, :create, :update, :destroy] do
       post :sign_in, to: 'auth#sign_in'
       delete :sign_out, to: 'auth#sign_out'
