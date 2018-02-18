@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     end
     resources :lectures, only: [:index, :show] do
       resources :evaluations, only: [:index, :create, :update, :destroy]
+      resource :bookmark, only: [:create, :destroy]
 
       get :search, on: :collection
     end
