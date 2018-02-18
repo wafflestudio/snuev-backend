@@ -16,7 +16,8 @@ RSpec.describe AuthorizeApiRequest do
     context 'when invalid request' do
       let(:request) { invalid_request_obj.call }
       context 'when missing token' do
-        it { expect { request }.to raise_error(ExceptionHandler::MissingToken) }
+        it { expect { request }.not_to raise_error }
+        it { expect(request[:user]).to be_nil }
       end
 
       context 'when invalid token' do
@@ -34,7 +35,7 @@ RSpec.describe AuthorizeApiRequest do
       context 'when user signed out' do
         let(:user) { create(:user, last_signed_out_at: Time.now ) }
         let(:invalid_request_obj) { described_class.new({ 'Authorization' => JsonWebToken.encode(user_id: user.id, iat: (Time.now.to_i - 10)) }) }
-        
+
         it { expect { request }.to raise_error(ExceptionHandler::InvalidToken) }
       end
     end
