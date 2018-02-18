@@ -16,6 +16,8 @@ gem 'cancancan', '~> 2.0'
 gem 'jsonapi-rails'
 gem 'chewy'
 gem 'friendly_id', '~> 5.1.0'
+gem 'roo'
+gem 'roo-xls'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.6'

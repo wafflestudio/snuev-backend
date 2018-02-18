@@ -47,7 +47,7 @@ guard :rspec, cmd: 'bundle exec rspec' do
 
   watch(rails.controllers) do |m|
     [
-      rspec.spec.call("controllers/#{m[1]}_controller")
+      rspec.spec.call("controllers/#{mtx[1]}_controller")
     ]
   end
 

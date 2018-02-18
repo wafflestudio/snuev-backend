@@ -2,6 +2,14 @@ class Lecture < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: [:slugged, :finders]
 
+  ENUM_CATEGORY={
+    "교양": 0,
+    "전선": 1,
+    "전필": 2,
+    "교직": 3,
+    "논문": 4,
+  }
+
   belongs_to :course
   belongs_to :professor
   has_many :evaluations
