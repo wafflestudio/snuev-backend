@@ -4,7 +4,9 @@ Rails.application.routes.draw do
       get :search, on: :collection
     end
     resources :lectures, only: [:index, :show] do
-      resources :evaluations, only: [:index, :create, :update, :destroy]
+      resources :evaluations, only: [:index, :create, :update, :destroy] do
+        resource :vote, only: [:create, :destroy]
+      end
 
       get :search, on: :collection
     end
