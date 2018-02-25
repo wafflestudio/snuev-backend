@@ -8,7 +8,7 @@
 
 
 | Raw  | Column | Value
-|:-----------|:------------------------------------------| :---- 
+|:-----------|:------------------------------------------| :----
 | 교양 | lecture.category | 교양: 0, 전선: 1, 전필: 2, 교직: 3, 논문: 4
 | 인문대학 | - |
 | 언어학과 | department.name | string
@@ -32,16 +32,25 @@
 
 ## How to use
 
+### 0. All in one
+
+```
+$ docker-compose run app rake 'crawler:mingrate[2018,1]'
+```
+
 ### 1. Download 수강편람 from `sugang.snu.ac.kr`
 
 ```
-$ docker-compose run app rails r crawl/download.rb <year ..|2013|..> <semester 1: spring, S: summer, 2: autumn, W: winter>
+$ docker-compose run app rake 'crawler:download[year,semester]'
 ```
+
+- year 2013, 2014, ...
+- semester 1: spring, S: summer, 2: autumn, W: winter
 
 For example,
 
 ```
-$ docker-compose run app rails r crawl/download.rb 2018 1
+$ docker-compose run app rake 'crawler:download[2018,1]'
 ```
 
 the result as follows:
@@ -56,7 +65,7 @@ the result as follows:
 ### 2. Convert xls to csv
 
 ```
-$ docker-compose run app rails r crawl/convert.rb crawl/data/2018_1_2018-02-18_02:58:25.xls
+$ docker-compose run app rake 'crawler:convert[crawl/data/2018_1_2018-02-18_02:58:25.xls]'
 ```
 
 the result as follows:
@@ -66,12 +75,6 @@ the result as follows:
 [*] - crawl/data/2018_1_2018-02-18_02:58:25.xls
 [*] Completed
 [*] - crawl/data/2018_1_2018-02-18_02:58:25.csv
-```
-
-### 3. Insert lectures into DB
-
-```
-$ docker-compose run app rails r crawl/insert.rb crawl/data/2018_1_2018-02-18_02:58:25.csv 2018 1
 ```
 
 #### Seed models
