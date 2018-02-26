@@ -28,6 +28,23 @@ RSpec.describe V1::LecturesController, type: :controller do
     end
   end
 
+  describe '#GET bookmarked' do
+    let(:bookmarked_request) { get :bookmarked }
+    let(:lectures) { create_list(:lecture, 1) }
+
+    before { lectures }
+
+    it { expect(bookmarked_request).to be_successful }
+    it { bookmarked_request; expect(assigns(:lectures)).to be_empty }
+
+    context 'when bookmarked a lecture' do
+      before { user.bookmarked_lectures << lectures }
+
+      it { expect(bookmarked_request).to be_successful }
+      it { bookmarked_request; expect(assigns(:lectures)).to eq(lectures) }
+    end
+  end
+
   describe '#GET show' do
     let(:lecture) { create(:lecture) }
     let(:show_request) { get :show, params: { id: lecture.id } }

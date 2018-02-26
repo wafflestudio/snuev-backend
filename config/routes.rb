@@ -7,8 +7,12 @@ Rails.application.routes.draw do
       resources :evaluations, only: [:index, :create, :update, :destroy] do
         resource :vote, only: [:create, :destroy]
       end
+      resource :bookmark, only: [:create, :destroy]
 
-      get :search, on: :collection
+      collection do
+        get :bookmarked
+        get :search
+      end
     end
 
     resource :user, only: [:show, :create, :update, :destroy] do
