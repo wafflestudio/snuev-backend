@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :departments, only: [:index]
+
     resource :user, only: [:show, :create, :update, :destroy] do
       post :sign_in, to: 'auth#sign_in'
       delete :sign_out, to: 'auth#sign_out'
