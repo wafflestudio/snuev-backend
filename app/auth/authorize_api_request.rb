@@ -6,7 +6,7 @@ class AuthorizeApiRequest
   end
 
   def call
-    if user && user.last_signed_out_at && user.last_signed_out_at.to_i > decoded_auth_token[:iat]
+    if user&.last_signed_out_at && user.last_signed_out_at.to_i > decoded_auth_token[:iat]
       raise(ExceptionHandler::InvalidToken, 'Token is invalidated')
     end
     { user: user }
@@ -28,6 +28,6 @@ class AuthorizeApiRequest
   end
 
   def http_auth_header
-    @http_auth_header ||= headers['Authorization'].split(' ').last if headers['Authorization'].present?
+    @http_auth_header ||= headers['Authorization']&.split(' ')&.last
   end
 end
