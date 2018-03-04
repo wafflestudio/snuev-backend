@@ -15,6 +15,7 @@ RSpec.describe V1::EvaluationsController, type: :controller do
       let(:lecture_2) { create(:lecture) }
       let(:evaluations) { create_list(:evaluation, 1, lecture: lecture) }
       let(:evaluations_2) { create_list(:evaluation, 1, lecture: lecture_2) }
+
       before { evaluations; evaluations_2 }
 
       it { expect(index_request).to be_successful }
@@ -26,6 +27,18 @@ RSpec.describe V1::EvaluationsController, type: :controller do
 
       it { expect(index_request).not_to be_successful }
     end
+  end
+
+  describe '#GET latest' do
+    let(:latest_request) { get :latest }
+    let(:lecture_2) { create(:lecture) }
+    let(:evaluations) { create_list(:evaluation, 1, lecture: lecture) }
+    let(:evaluations_2) { create_list(:evaluation, 1, lecture: lecture_2) }
+
+    before { evaluations; evaluations_2 }
+
+    it { expect(latest_request).to be_successful }
+    it { latest_request; expect(assigns(:evaluations).size).to eq(2) }
   end
 
   describe '#POST create' do
