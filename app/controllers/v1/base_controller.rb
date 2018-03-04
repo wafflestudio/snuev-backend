@@ -9,6 +9,8 @@ class V1::BaseController < ApplicationController
   end
 
   def current_user
-    @current_user ||= (AuthorizeApiRequest.new(request.headers).call)[:user]
+    @current_user ||= AuthorizeApiRequest.new(request.headers).call[:user]
+  rescue StandardError
+    nil
   end
 end
