@@ -41,6 +41,33 @@ RSpec.describe V1::EvaluationsController, type: :controller do
     it { latest_request; expect(assigns(:evaluations).size).to eq(2) }
   end
 
+  describe '#GET mine' do
+    let(:mine_request) { get :mine }
+
+    it { expect(mine_request).to be_successful }
+    it { mine_request; expect(assigns(:evaluations)).to be_empty }
+
+    context 'when my evaluations exist' do
+      let(:evaluations) { create_list(:evaluation, 1, user: user) }
+
+      before { evaluations }
+
+      it { expect(mine_request).to be_successful }
+      it { mine_request; expect(assigns(:evaluations)).to eq(evaluations) }
+    end
+
+    context 'within lecture' do
+      let(:mine_request) { get :mine, params: { lecture_id: lecture.id } }
+
+      let(:evaluations) { create_list(:evaluation, 1, user: user, lecture: lecture) }
+
+      before { evaluations }
+
+      it { expect(mine_request).to be_successful }
+      it { mine_request; expect(assigns(:evaluations)).to eq(evaluations) }
+    end
+  end
+
   describe '#POST create' do
     let(:create_request) { post :create, params: { evaluation: evaluation_params, lecture_id: lecture.id } }
     let(:evaluation_params) { { comment: comment, score: score, easiness: easiness, grading: grading } }

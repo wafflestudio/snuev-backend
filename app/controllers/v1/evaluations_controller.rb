@@ -13,6 +13,18 @@ class V1::EvaluationsController < V1::BaseController
     render jsonapi: @evaluations, include: [:semester]
   end
 
+  def mine
+    authorize! :read, Evaluation
+    @evaluations = if @lecture
+                     @lecture.evaluations.where(user: current_user)
+                   else
+                     current_user.evaluations
+                   end
+    @evaluations = @evaluations.includes(:semester).page(params[:page])
+
+    render jsonapi: @evaluations, include: [:semester]
+  end
+
   def create
     authorize! :create, Evaluation
     @evaluation = Evaluation.new(evaluation_params.merge(user: current_user, lecture: @lecture))
