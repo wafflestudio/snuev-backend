@@ -40,6 +40,6 @@ class V1::LecturesController < V1::BaseController
   protected
 
   def lecture_scope
-    Lecture.with_bookmark(current_user).includes(:semesters, :professor, course: :department)
+    Lecture.decorated(current_user).includes(:semesters, :professor, course: :department)
   end
 end

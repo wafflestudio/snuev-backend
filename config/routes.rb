@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     end
     resources :lectures, only: [:index, :show] do
       resources :evaluations, only: [:index, :create, :update, :destroy] do
+        get :mine, on: :collection
+
         resource :vote, only: [:create, :destroy]
       end
       resource :bookmark, only: [:create, :destroy]
@@ -12,6 +14,13 @@ Rails.application.routes.draw do
       collection do
         get :bookmarked
         get :search
+      end
+    end
+
+    resources :evaluations, only: [] do
+      collection do
+        get :latest
+        get :mine
       end
     end
 

@@ -8,14 +8,19 @@ class Lecture < ApplicationRecord
 
   update_index('lectures#lecture') { self }
 
-  def self.with_bookmark(user = nil)
+  def self.decorated(user = nil)
     if user
-      joins("LEFT OUTER JOIN bookmarks ON bookmarks.lecture_id = lectures.id AND bookmarks.user_id = #{user.id}")
-        .select('lectures.*, count(bookmarks.*) > 0 as bookmarked')
+      joins("LEFT OUTER JOIN evaluations ON evaluations.lecture_id = lectures.id AND evaluations.user_id = #{user.id}")
+        .joins("LEFT OUTER JOIN bookmarks ON bookmarks.lecture_id = lectures.id AND bookmarks.user_id = #{user.id}")
+        .select('lectures.*, count(evaluations.*) > 0 as evaluated, count(bookmarks.*) > 0 as bookmarked')
         .group('lectures.id')
     else
       where(nil)
     end
+  end
+
+  def evaluated
+    self[:evaluated] || false
   end
 
   def bookmarked
