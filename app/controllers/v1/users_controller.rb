@@ -31,10 +31,10 @@ class V1::UsersController < V1::BaseController
   private
 
   def user_create_params
-    params.permit(:username, :nickname, :password, :password_confirmation)
+    params.permit(:username, :nickname, :password, :password_confirmation, :department_id)
   end
 
   def user_update_params
-    params.permit(:nickname, :password, :password_confirmation)
+    params.permit(:nickname, :password, :password_confirmation, :department_id)
   end
 end
