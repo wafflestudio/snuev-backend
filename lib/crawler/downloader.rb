@@ -3,11 +3,13 @@ require 'json'
 
 module Crawler
   class Downloader
-    def self.parse_config(year, season)
-      ctime = Time.now.localtime().strftime("%Y-%m-%d_%H:%M:%S")
-      xls_path = Rails.root+"crawl/data/#{year}_#{season}_#{ctime}.xls"
+    CRS_HOST = 'http://sugang.snu.ac.kr:80'.freeze
 
-      path="/sugang/cc/cc100excel.action"
+    def self.parse_config(year, season)
+      ctime = Time.now.localtime.strftime('%Y-%m-%d_%H:%M:%S')
+      xls_path = Rails.root + "crawl/data/#{year}_#{season}_#{ctime}.xls"
+
+      path = '/sugang/cc/cc100excel.action'
 
       shtm = {
         'spring': 'U000200001U000300001',
@@ -42,9 +44,11 @@ module Crawler
       puts "[*] Start fetching..."
       puts "[*] - #{year}/#{season}"
 
-      res = Net::HTTP.start('sugang.snu.ac.kr',80){|http|
+      uri = URI.parse(CRS_HOST)
+
+      res = Net::HTTP.start(uri.host, uri.port) do |http|
         http.post(path, data)
-      }
+      end
 
       open(xls_path, "wb") do |file|
         file.print(res.body)
