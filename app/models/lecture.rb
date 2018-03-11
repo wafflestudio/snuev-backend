@@ -14,9 +14,29 @@ class Lecture < ApplicationRecord
   belongs_to :professor
   has_many :evaluations
   has_many :lecture_sessions
+  has_many :bookmarks
   has_many :semesters, through: :lecture_sessions
 
   update_index('lectures#lecture') { self }
+
+  def self.decorated(user = nil)
+    if user
+      joins("LEFT OUTER JOIN evaluations ON evaluations.lecture_id = lectures.id AND evaluations.user_id = #{user.id}")
+        .joins("LEFT OUTER JOIN bookmarks ON bookmarks.lecture_id = lectures.id AND bookmarks.user_id = #{user.id}")
+        .select('lectures.*, count(evaluations.*) > 0 as evaluated, count(bookmarks.*) > 0 as bookmarked')
+        .group('lectures.id')
+    else
+      where(nil)
+    end
+  end
+
+  def evaluated
+    self[:evaluated] || false
+  end
+
+  def bookmarked
+    self[:bookmarked] || false
+  end
 
   def update_scores
     update(

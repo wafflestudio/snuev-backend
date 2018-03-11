@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180218092725) do
+ActiveRecord::Schema.define(version: 20180304164613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "lecture_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_bookmarks_on_user_id"
+  end
 
   create_table "courses", force: :cascade do |t|
     t.string "name", default: "", null: false
@@ -53,6 +61,8 @@ ActiveRecord::Schema.define(version: 20180218092725) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "semester_id"
+    t.integer "upvotes_count", default: 0
+    t.integer "downvotes_count", default: 0
     t.index ["lecture_id"], name: "index_evaluations_on_lecture_id"
     t.index ["user_id"], name: "index_evaluations_on_user_id"
   end
@@ -132,10 +142,22 @@ ActiveRecord::Schema.define(version: 20180218092725) do
     t.datetime "confirmation_sent_at"
     t.string "reset_token"
     t.datetime "reset_sent_at"
+    t.integer "department_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_token"], name: "index_users_on_reset_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.string "type"
+    t.integer "votable_id"
+    t.string "votable_type"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "votable_id", "votable_type"], name: "index_votes_on_user_id_and_votable_id_and_votable_type", unique: true
+    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable_type_and_votable_id"
   end
 
 end

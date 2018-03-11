@@ -1,7 +1,10 @@
 class User < ApplicationRecord
   has_secure_password
 
+  belongs_to :department, optional: true
   has_many :evaluations
+  has_many :bookmarks
+  has_many :bookmarked_lectures, -> { select('lectures.*, true as bookmarked').distinct }, source: :lecture, through: :bookmarks
 
   before_validation :set_email_from_username, on: :create
 

@@ -4,10 +4,27 @@ Rails.application.routes.draw do
       get :search, on: :collection
     end
     resources :lectures, only: [:index, :show] do
-      resources :evaluations, only: [:index, :create, :update, :destroy]
+      resources :evaluations, only: [:index, :create, :update, :destroy] do
+        get :mine, on: :collection
 
-      get :search, on: :collection
+        resource :vote, only: [:create, :destroy]
+      end
+      resource :bookmark, only: [:create, :destroy]
+
+      collection do
+        get :bookmarked
+        get :search
+      end
     end
+
+    resources :evaluations, only: [] do
+      collection do
+        get :latest
+        get :mine
+      end
+    end
+
+    resources :departments, only: [:index]
 
     resource :user, only: [:show, :create, :update, :destroy] do
       post :sign_in, to: 'auth#sign_in'

@@ -8,6 +8,8 @@ class SerializableLecture < JSONAPI::Serializable::Resource
   attribute :updated_at
   attribute :name
   attribute :evaluations_count
+  attribute :evaluated
+  attribute :bookmarked
   has_one :course
   has_one :professor
   has_many :semesters

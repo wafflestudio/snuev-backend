@@ -1,10 +1,27 @@
 class V1::EvaluationsController < V1::BaseController
-  before_action :find_lecture
+  before_action :find_lecture, except: :latest
   before_action :find_evaluation, only: [:update, :destroy]
 
   def index
     authorize! :read, Evaluation
     @evaluations = @lecture.evaluations.includes(:semester).page(params[:page])
+    render jsonapi: @evaluations, include: [:semester]
+  end
+
+  def latest
+    @evaluations = Evaluation.order(id: :desc).includes(:semester).page(params[:page])
+    render jsonapi: @evaluations, include: [:semester]
+  end
+
+  def mine
+    authorize! :read, Evaluation
+    @evaluations = if @lecture
+                     @lecture.evaluations.where(user: current_user)
+                   else
+                     current_user.evaluations
+                   end
+    @evaluations = @evaluations.includes(:semester).page(params[:page])
+
     render jsonapi: @evaluations, include: [:semester]
   end
 
@@ -33,7 +50,7 @@ class V1::EvaluationsController < V1::BaseController
   private
 
   def find_lecture
-    @lecture = Lecture.find(params[:lecture_id])
+    @lecture = Lecture.find(params[:lecture_id]) if params[:lecture_id]
   end
 
   def find_evaluation
