@@ -42,6 +42,22 @@ RSpec.describe V1::UsersController, type: :controller do
     it { expect(update_request).to be_successful }
     it { expect { update_request }.to change { user.reload.nickname }.to('nick') }
 
+    context 'when changing department' do
+      let(:update_request) { patch :update, params: { department_id: department.id } }
+      let(:department) { create(:department) }
+
+      it { expect(update_request).to be_successful }
+      it { expect { update_request }.to change { user.reload.department }.to(department) }
+
+      context 'when already belongs to a department' do
+        let(:user) { create(:user, department: old_department) }
+        let(:old_department) { create(:department) }
+
+        it { expect(update_request).to be_successful }
+        it { expect { update_request }.to change { user.reload.department }.from(old_department).to(department) }
+      end
+    end
+
     context 'when changing unpermitted attribute' do
       let(:update_request) { patch :update, params: { username: 'new_user' } }
 

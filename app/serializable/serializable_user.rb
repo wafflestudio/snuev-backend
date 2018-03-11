@@ -10,4 +10,6 @@ class SerializableUser < JSONAPI::Serializable::Resource
   attribute :is_confirmed do
     @object.confirmed?
   end
+
+  belongs_to :department
 end
