@@ -18,6 +18,10 @@ class Evaluation < ApplicationRecord
 
   private
 
+  def preview
+    self.comment.to_s[0...10]
+  end
+
   def set_default_semester
     self.semester ||= lecture.semesters.order(year: :desc, season: :desc).first
   end
