@@ -1,13 +1,18 @@
 require 'net/http'
 require 'json'
+require 'fileutils'
 
 module Crawler
   class Downloader
     CRS_HOST = 'http://sugang.snu.ac.kr:80'.freeze
 
-    def self.parse_config(year, season)
+    def self.parse_config(year, season, options = {})
       ctime = Time.now.localtime.strftime('%Y-%m-%d_%H:%M:%S')
-      xls_path = Rails.root + "crawl/data/#{year}_#{season}_#{ctime}.xls"
+      dirname = Rails.root.join(options.delete(:dir) || 'crawl/data')
+      unless File.directory?(dirname)
+        FileUtils.mkdir_p(dirname)
+      end
+      xls_path = dirname.join(dirname, "#{year}_#{season}_#{ctime}.xls")
 
       path = '/sugang/cc/cc100excel.action'
 
@@ -15,19 +20,19 @@ module Crawler
         'spring': 'U000200001U000300001',
         'autumn': 'U000200002U000300001',
         'summer': 'U000200001U000300002',
-        'winter': 'U000200002U000300002',
+        'winter': 'U000200002U000300002'
       }[season.to_sym]
-      srchCptnCorsFg=""
-      data="srchCond=1&pageNo=1&workType=EX&sortKey=&sortOrder=&srchOpenSchyy=#{year}&currSchyy=#{year}&srchOpenShtm=#{shtm}&srchCptnCorsFg=#{srchCptnCorsFg}&srchOpenShyr=&srchSbjtCd=&srchSbjtNm=&srchOpenUpSbjtFldCd=&srchOpenSbjtFldCd=&srchOpenUpDeptCd=&srchOpenDeptCd=&srchOpenMjCd=&srchOpenSubmattCorsFg=&srchOpenSubmattFgCd=&srchOpenPntMin=&srchOpenPntMax=&srchCamp=&srchBdNo=&srchProfNm=&srchTlsnAplyCapaCntMin=&srchTlsnAplyCapaCntMax=&srchTlsnRcntMin=&srchTlsnRcntMax=&srchOpenSbjtTmNm=&srchOpenSbjtTm=&srchOpenSbjtTmVal=&srchLsnProgType=&srchMrksGvMthd=&srchFlag=&inputTextView=&inputText="
+      srchCptnCorsFg = ''
+      data = "srchCond=1&pageNo=1&workType=EX&sortKey=&sortOrder=&srchOpenSchyy=#{year}&currSchyy=#{year}&srchOpenShtm=#{shtm}&srchCptnCorsFg=#{srchCptnCorsFg}&srchOpenShyr=&srchSbjtCd=&srchSbjtNm=&srchOpenUpSbjtFldCd=&srchOpenSbjtFldCd=&srchOpenUpDeptCd=&srchOpenDeptCd=&srchOpenMjCd=&srchOpenSubmattCorsFg=&srchOpenSubmattFgCd=&srchOpenPntMin=&srchOpenPntMax=&srchCamp=&srchBdNo=&srchProfNm=&srchTlsnAplyCapaCntMin=&srchTlsnAplyCapaCntMax=&srchTlsnRcntMin=&srchTlsnRcntMax=&srchOpenSbjtTmNm=&srchOpenSbjtTm=&srchOpenSbjtTmVal=&srchLsnProgType=&srchMrksGvMthd=&srchFlag=&inputTextView=&inputText="
 
-      return {
+      {
         xls_path: xls_path,
         path: path,
-        data: data,
+        data: data
       }
     end
 
-    def self.download(year, season)
+    def self.download(year, season, options = {})
       if !(year.to_i > 1994) then
         puts "[!] 'year' shuold be greater than 1994"
         raise ArgumentError
@@ -36,7 +41,7 @@ module Crawler
         raise ArgumentError
       end
 
-      config = self.parse_config(year, season)
+      config = self.parse_config(year, season, options)
       xls_path = config[:xls_path]
       path = config[:path]
       data = config[:data]
