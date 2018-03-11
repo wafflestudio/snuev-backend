@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20180218092725) do
     t.string "name"
     t.integer "professor_id"
     t.string "slug"
+    t.integer "evaluations_count", default: 0
     t.string "code"
     t.integer "quota", default: 0
     t.string "class_time"
@@ -99,7 +100,6 @@ ActiveRecord::Schema.define(version: 20180218092725) do
     t.string "remark"
     t.string "lang"
     t.string "status"
-    t.integer "evaluations_count", default: 0
     t.index ["course_id"], name: "index_lectures_on_course_id"
     t.index ["slug"], name: "index_lectures_on_slug", unique: true
   end
