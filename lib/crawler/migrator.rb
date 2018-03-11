@@ -3,6 +3,15 @@ require 'csv'
 module Crawler
   class Migrator
     def self.migrate(csv_path, year, season)
+      raise Errno::ENOENT unless File.file? csv_path
+      if !(year.to_i > 1994) then
+        puts "[!] 'year' shuold be greater than 1994"
+        raise ArgumentError
+      elsif !["spring", "autumn", "summer", "winter"].include?(season) then
+        puts "[!] 'season' should be in [spring, autumn, summer, winter]"
+        raise ArgumentError
+      end
+
       puts "[*] Insert season lectures from csv"
       puts "[*] - #{csv_path}"
 
@@ -15,7 +24,7 @@ module Crawler
       # "lecture_number", "course_title", "total_credit", "lecture_credit", "lab_creidt",
       # "class_time", "location", "instructor", "quota", "current_quota", "enrollment",
       # "remark", "language", "status"
-      
+
       CSV.foreach(csv_path, "r").each_with_index do |row, line|
         next if line == 0
         puts "[*] #{line} lectures inserted" if line % 500  == 0

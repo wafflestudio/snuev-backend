@@ -19,6 +19,8 @@ end
 module Crawler
   class Converter
     def self.convert(xls_path)
+      raise Errno::ENOENT unless File.file? xls_path
+
       csv_path = xls_path.gsub(".xls", ".csv")
 
       puts "[*] Converting xls to csv"
@@ -77,7 +79,7 @@ module Crawler
       puts "[*] Completed"
       puts "[*] - #{csv_path}"
 
-      return csv_path
+      return csv_path.to_s
     end
   end
 end

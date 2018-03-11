@@ -35,7 +35,7 @@
 ### 0. All in one
 
 ```
-$ docker-compose run app rake 'crawler:mingrate[2018,1]'
+$ docker-compose run app rake 'crawler:mingrate[2018,spring]'
 ```
 
 ### 1. Download 수강편람 from `sugang.snu.ac.kr`
@@ -45,12 +45,12 @@ $ docker-compose run app rake 'crawler:download[year,semester]'
 ```
 
 - year 2013, 2014, ...
-- semester 1: spring, S: summer, 2: autumn, W: winter
+- semester spring, autumn, summer, winter
 
 For example,
 
 ```
-$ docker-compose run app rake 'crawler:download[2018,1]'
+$ docker-compose run app rake 'crawler:download[2018,spring]'
 ```
 
 the result as follows:
@@ -59,22 +59,22 @@ the result as follows:
 [*] Start fetching...
 [*] 2018/1
 [*] Downloaded:
-[*] crawl/data/2018_1_2018-02-18_02:58:25.xls
+[*] crawl/data/2018_spring_2018-02-18_02:58:25.xls
 ```
 
 ### 2. Convert xls to csv
 
 ```
-$ docker-compose run app rake 'crawler:convert[crawl/data/2018_1_2018-02-18_02:58:25.xls]'
+$ docker-compose run app rake 'crawler:convert[crawl/data/2018_spring_2018-02-18_02:58:25.xls]'
 ```
 
 the result as follows:
 
 ```
 [*] Converting xls to csv
-[*] - crawl/data/2018_1_2018-02-18_02:58:25.xls
+[*] - crawl/data/2018_spring_2018-02-18_02:58:25.xls
 [*] Completed
-[*] - crawl/data/2018_1_2018-02-18_02:58:25.csv
+[*] - crawl/data/2018_spring_2018-02-18_02:58:25.csv
 ```
 
 #### Seed models
