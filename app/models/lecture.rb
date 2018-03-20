@@ -1,7 +1,4 @@
 class Lecture < ApplicationRecord
-  extend FriendlyId
-  friendly_id :name, use: [:slugged, :finders]
-
   ENUM_CATEGORY={
     "교양": 0,
     "전선": 1,
