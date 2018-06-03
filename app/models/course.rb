@@ -1,6 +1,4 @@
 class Course < ApplicationRecord
-  extend FriendlyId
-  friendly_id :name, use: [:slugged, :finders]
 
   has_many :lectures
   belongs_to :department

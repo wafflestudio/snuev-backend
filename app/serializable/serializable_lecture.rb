@@ -1,6 +1,6 @@
 class SerializableLecture < JSONAPI::Serializable::Resource
   type 'lectures'
-  id { @object.friendly_id }
+  attribute :id
   attribute :score
   attribute :easiness
   attribute :grading
