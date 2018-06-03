@@ -38,4 +38,30 @@ RSpec.describe Evaluation, type: :model do
       it { expect { evaluation }.to raise_exception(ActiveRecord::RecordInvalid) }
     end
   end
+
+  describe '.decorated' do
+    let(:lecture) { create(:lecture) }
+    let(:user) { create(:user) }
+    let(:evaluation) { create(:evaluation, lecture: lecture, user: user) }
+    let(:decorated_evaluation) { Evaluation.decorated(user).first }
+
+    before { evaluation }
+
+    it { expect(decorated_evaluation.upvoted).to be_falsey }
+    it { expect(decorated_evaluation.downvoted).to be_falsey }
+
+    context 'when upvoted' do
+      before { evaluation.upvotes.create(user: user) }
+
+      it { expect(decorated_evaluation.upvoted).to be_truthy }
+      it { expect(decorated_evaluation.downvoted).to be_falsey }
+    end
+
+    context 'when downvoted' do
+      before { evaluation.downvotes.create(user: user) }
+
+      it { expect(decorated_evaluation.upvoted).to be_falsey }
+      it { expect(decorated_evaluation.downvoted).to be_truthy }
+    end
+  end
 end

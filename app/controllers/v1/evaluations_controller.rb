@@ -4,12 +4,12 @@ class V1::EvaluationsController < V1::BaseController
 
   def index
     authorize! :read, Evaluation
-    @evaluations = @lecture.evaluations.includes(:semester).page(params[:page])
+    @evaluations = @lecture.evaluations.decorated(current_user).includes(:semester).page(params[:page])
     render jsonapi: @evaluations, include: [:semester]
   end
 
   def latest
-    @evaluations = Evaluation.order(id: :desc).includes(:semester).page(params[:page])
+    @evaluations = Evaluation.decorated(current_user).order(id: :desc).includes(:semester).page(params[:page])
     render jsonapi: @evaluations, include: [:semester]
   end
 
@@ -20,7 +20,7 @@ class V1::EvaluationsController < V1::BaseController
                    else
                      current_user.evaluations
                    end
-    @evaluations = @evaluations.includes(:semester).page(params[:page])
+    @evaluations = @evaluations.decorated(current_user).includes(:semester).page(params[:page])
 
     render jsonapi: @evaluations, include: [:semester]
   end

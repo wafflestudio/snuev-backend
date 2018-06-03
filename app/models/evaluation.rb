@@ -16,10 +16,29 @@ class Evaluation < ApplicationRecord
   after_save :update_lecture_scores
   after_destroy :update_lecture_scores
 
+  def self.decorated(user = nil)
+    if user
+      joins("LEFT OUTER JOIN votes upvotes ON upvotes.votable_id = evaluations.id AND upvotes.type = '#{Vote::Upvote}' AND upvotes.votable_type = '#{Evaluation}' AND upvotes.user_id = #{user.id}")
+        .joins("LEFT OUTER JOIN votes downvotes ON downvotes.votable_id = evaluations.id AND downvotes.type = '#{Vote::Downvote}' AND downvotes.votable_type = '#{Evaluation}' AND downvotes.user_id = #{user.id}")
+        .select('evaluations.*, count(upvotes.*) > 0 as upvoted, count(downvotes.*) > 0 as downvoted')
+        .group('evaluations.id')
+    else
+      where(nil)
+    end
+  end
+
+  def upvoted
+    self[:upvoted] || false
+  end
+
+  def downvoted
+    self[:downvoted] || false
+  end
+
   private
 
   def preview
-    self.comment.to_s[0...10]
+    comment.to_s[0...10]
   end
 
   def set_default_semester
