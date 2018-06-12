@@ -219,6 +219,8 @@ GEM
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
     safe_yaml (1.0.4)
+    sentry-raven (2.7.3)
+      faraday (>= 0.7.6, < 1.0)
     shellany (0.0.1)
     simplecov (0.16.1)
       docile (~> 1.1)
@@ -277,6 +279,7 @@ DEPENDENCIES
   roo
   roo-xls
   rspec-rails (~> 3.6)
+  sentry-raven
   simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
