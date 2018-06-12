@@ -6,6 +6,8 @@ class SerializableEvaluation < JSONAPI::Serializable::Resource
   attribute :grading
   attribute :upvotes_count
   attribute :downvotes_count
+  attribute :upvoted
+  attribute :downvoted
   attribute :created_at
   attribute :updated_at
   belongs_to :semester
