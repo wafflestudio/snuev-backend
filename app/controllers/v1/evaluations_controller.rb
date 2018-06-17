@@ -13,6 +13,15 @@ class V1::EvaluationsController < V1::BaseController
     render jsonapi: @evaluations, include: [:semester]
   end
 
+  def most_liked
+    @evaluations = Evaluation
+                   .decorated(current_user)
+                   .order(upvotes_count: :desc)
+                   .where('evaluations.created_at > ?', Date.today.ago(3.months))
+                   .includes(:semester).page(params[:page])
+    render jsonapi: @evaluations, include: [:semester]
+  end
+
   def mine
     authorize! :read, Evaluation
     @evaluations = if @lecture
