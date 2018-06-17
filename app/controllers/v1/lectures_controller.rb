@@ -14,7 +14,7 @@ class V1::LecturesController < V1::BaseController
   end
 
   def top_rated
-    @lectures = lecture_scope.where('lectures.evaluations_count > ?', 10).order(score: :desc).page(params[:page])
+    @lectures = lecture_scope.where('lectures.evaluations_count >= ?', 10).order(score: :desc).page(params[:page])
     render jsonapi: @lectures,
            include: [{ course: [:department] }, :semesters, :professor]
   end
