@@ -21,6 +21,7 @@ gem 'chewy'
 gem 'friendly_id', '~> 5.1.0'
 gem 'roo'
 gem 'roo-xls'
+gem 'dotenv-rails'
 
 group :development, :test do
   gem 'mina', require: false
