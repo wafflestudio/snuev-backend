@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       resource :bookmark, only: [:create, :destroy]
 
       collection do
+        get :most_evaluated
+        get :top_rated
         get :bookmarked
         get :search
       end
@@ -20,6 +22,7 @@ Rails.application.routes.draw do
     resources :evaluations, only: [] do
       collection do
         get :latest
+        get :most_liked
         get :mine
       end
     end

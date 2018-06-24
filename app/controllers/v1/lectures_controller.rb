@@ -7,6 +7,18 @@ class V1::LecturesController < V1::BaseController
            include: [{ course: [:department] }, :semesters, :professor]
   end
 
+  def most_evaluated
+    @lectures = lecture_scope.order(evaluations_count: :desc).page(params[:page])
+    render jsonapi: @lectures,
+           include: [{ course: [:department] }, :semesters, :professor]
+  end
+
+  def top_rated
+    @lectures = lecture_scope.where('lectures.evaluations_count >= ?', 10).order(score: :desc).page(params[:page])
+    render jsonapi: @lectures,
+           include: [{ course: [:department] }, :semesters, :professor]
+  end
+
   def bookmarked
     @lectures = lecture_scope.where(id: current_user.bookmarks.select(:lecture_id)).page(params[:page])
     render jsonapi: @lectures,

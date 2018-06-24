@@ -29,6 +29,15 @@ RSpec.describe V1::EvaluationsController, type: :controller do
     end
   end
 
+  describe '#GET most_liked' do
+    let(:most_liked_request) { get :most_liked }
+    let(:evaluations) { create_list(:evaluation, 2, lecture: lecture) }
+    before { evaluations.last.upvotes.create(user: user) }
+
+    it { expect(most_liked_request).to be_successful }
+    it { most_liked_request; expect(assigns(:evaluations).first).to eq(evaluations.last) }
+  end
+
   describe '#GET latest' do
     let(:latest_request) { get :latest }
     let(:lecture_2) { create(:lecture) }

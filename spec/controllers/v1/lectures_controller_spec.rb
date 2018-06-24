@@ -28,6 +28,31 @@ RSpec.describe V1::LecturesController, type: :controller do
     end
   end
 
+  describe '#GET most_evaluated' do
+    let(:most_evaluated_request) { get :most_evaluated }
+    let(:lectures) { create_list(:lecture, 2) }
+
+    before do
+      create(:evaluation, lecture: lectures.last)
+    end
+
+    it { expect(most_evaluated_request).to be_successful }
+    it { most_evaluated_request; expect(assigns(:lectures).first).to eq(lectures.last) }
+  end
+
+  describe '#GET top_rated' do
+    let(:top_rated_request) { get :top_rated }
+    let(:lectures) { create_list(:lecture, 2) }
+
+    before do
+      create_list(:evaluation, 10, lecture: lectures.last)
+    end
+
+    it { expect(top_rated_request).to be_successful }
+    it { top_rated_request; expect(assigns(:lectures).size).to eq(1) }
+    it { top_rated_request; expect(assigns(:lectures).size).to eq(1) }
+  end
+
   describe '#GET bookmarked' do
     let(:bookmarked_request) { get :bookmarked }
     let(:lectures) { create_list(:lecture, 1) }
