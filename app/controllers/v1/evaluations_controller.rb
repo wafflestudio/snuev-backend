@@ -1,6 +1,7 @@
 class V1::EvaluationsController < V1::BaseController
   before_action :find_lecture, except: :latest
   before_action :find_evaluation, only: [:update, :destroy]
+  skip_before_action :authorize_request, only: [:latest, :most_liked]
 
   def index
     authorize! :read, Evaluation
