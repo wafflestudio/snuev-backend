@@ -25,7 +25,7 @@ gem 'dotenv-rails'
 
 group :development, :test do
   gem 'mina', require: false
-  gem 'mina-puma', require: false,  github: 'untitledkingdom/mina-puma'
+  gem 'mina-puma', require: false
   gem 'rspec-rails', '~> 3.6'
   gem 'rails-controller-testing'
   gem 'webmock'
