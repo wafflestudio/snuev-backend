@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.4.1'
+ruby '2.4.2'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -21,8 +21,11 @@ gem 'chewy'
 gem 'friendly_id', '~> 5.1.0'
 gem 'roo'
 gem 'roo-xls'
+gem 'dotenv-rails'
 
 group :development, :test do
+  gem 'mina', require: false
+  gem 'mina-puma', require: false
   gem 'rspec-rails', '~> 3.6'
   gem 'rails-controller-testing'
   gem 'webmock'

@@ -3,7 +3,7 @@ env:
   global:
     - CC_TEST_REPORTER_ID=944f313b82459ad1bfb349d775bfd6adaa8ec256da84357ba1741523e42d0004
 rvm:
-  - ruby-2.4.1
+  - ruby-2.4.2
 addons:
   - postgresql: '9.6'
 cache: bundler
