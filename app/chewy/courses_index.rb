@@ -1,19 +1,13 @@
 class CoursesIndex < Chewy::Index
   settings analysis: {
     analyzer: {
-      korean: {
-        type: 'custom',
-        tokenizer: ['seunjeon_default_tokenizer']
-      }
-    },
-    tokenizer: {
-      seunjeon_default_tokenizer: {
-        type: 'seunjeon_tokenizer',
+      ngram: {
+        tokenizer: 'ngram'
       }
     }
   }
 
   define_type Course do
-    field :name, analyzer: 'korean'
+    field :name, analyzer: 'ngram'
   end
 end
