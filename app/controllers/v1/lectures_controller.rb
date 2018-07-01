@@ -40,7 +40,7 @@ class V1::LecturesController < V1::BaseController
     page = params[:page].to_i || 0
 
     @lectures = LecturesIndex::Lecture
-                .query(wildcard: { _all: { value: "*#{query}*" } })
+                .query(match: { name: query })
                 .load(scope: lecture_scope)
                 .page(page)
                 .objects
