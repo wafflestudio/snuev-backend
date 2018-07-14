@@ -76,6 +76,7 @@ RSpec.describe V1::LecturesController, type: :controller do
 
     it { expect(show_request).to be_successful }
     it { show_request; expect(assigns(:lecture)).to eq(lecture) }
+    it { expect { show_request }.to change { lecture.reload.impressions_count }.by(1) }
 
     context 'when lecture does not exist' do
       let(:lecture) { nil }
