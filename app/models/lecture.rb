@@ -1,4 +1,6 @@
 class Lecture < ApplicationRecord
+  is_impressionable counter_cache: true, unique: true
+
   ENUM_CATEGORY={
     "교양": 0,
     "전선": 1,

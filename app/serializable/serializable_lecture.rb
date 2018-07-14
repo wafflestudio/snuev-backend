@@ -10,6 +10,9 @@ class SerializableLecture < JSONAPI::Serializable::Resource
   attribute :evaluations_count
   attribute :evaluated
   attribute :bookmarked
+  attribute :view_count do
+    @object.impressions_count
+  end
   has_one :course
   has_one :professor
   has_many :semesters
