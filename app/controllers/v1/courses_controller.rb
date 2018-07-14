@@ -17,7 +17,7 @@ class V1::CoursesController < V1::BaseController
 
     @courses = CoursesIndex::Course
                .load(scope: -> { includes(:department) })
-               .query(wildcard: { _all: { value: "*#{query}*" } })
+               .query(match: { name: query })
                .page(page)
                .objects
 

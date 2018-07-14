@@ -1,19 +1,18 @@
 class LecturesIndex < Chewy::Index
   settings analysis: {
     analyzer: {
-      name: {
-        tokenizer: 'standard',
-        filter: ["lowercase"]
+      ngram: {
+        tokenizer: 'ngram'
       }
     }
   }
 
   define_type Lecture.includes(:course, :professor) do
     field :course do
-      field :name, analyzer: 'name'
+      field :name, analyzer: 'ngram'
     end
     field :professor do
-      field :name, analyzer: 'name'
+      field :name, analyzer: 'ngram'
     end
   end
 end
