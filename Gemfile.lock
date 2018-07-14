@@ -101,6 +101,8 @@ GEM
     hashdiff (0.3.7)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
+    impressionist (1.6.1)
+      nokogiri (~> 1)
     json (2.1.0)
     jsonapi-deserializable (0.2.0)
     jsonapi-parser (0.1.1)
@@ -278,6 +280,7 @@ DEPENDENCIES
   friendly_id (~> 5.1.0)
   guard
   guard-rspec
+  impressionist
   jsonapi-rails
   jwt
   kaminari

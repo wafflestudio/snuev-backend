@@ -27,6 +27,7 @@ class V1::LecturesController < V1::BaseController
 
   def show
     @lecture = lecture_scope.find(params[:id])
+    impressionist(@lecture)
     render jsonapi: @lecture,
            include: [{ course: [:department] }, :semesters, :professor]
   end
