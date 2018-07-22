@@ -1,13 +1,13 @@
 class Lecture < ApplicationRecord
   is_impressionable counter_cache: true, unique: true
 
-  ENUM_CATEGORY={
+  ENUM_CATEGORY = {
     "교양": 0,
     "전선": 1,
     "전필": 2,
     "교직": 3,
-    "논문": 4,
-  }
+    "논문": 4
+  }.with_indifferent_access
 
   belongs_to :course
   belongs_to :professor
