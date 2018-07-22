@@ -15,7 +15,7 @@ module Crawler
       puts "[*] Insert season lectures from csv"
       puts "[*] - #{csv_path}"
 
-      s = Semester.find_or_create_by(year: year, season: season)
+      semester = Semester.find_or_create_by(year: year, season: season)
 
       ####
       # headers
@@ -31,17 +31,17 @@ module Crawler
 
         classification = row[0]
         college = row[1]
-        department = row[2] #
+        department = row[2]
         target_grade = row[3].to_s[0].to_i #
-        course_code = row[4] #
+        course_code = row[4]
         lecture_code = row[5]
-        course_title = row[6] #
-        total_credit = row[7].to_i #
-        lecture_credit = row[8].to_i #
-        lab_credit = row[9].to_i #
+        course_title = row[6]
+        total_credit = row[7].to_i
+        lecture_credit = row[8].to_i
+        lab_credit = row[9].to_i
         class_time = row[10]
         location = row[11]
-        professor = row[12] #
+        professor = row[12]
         quota = row[13].to_i
         current_quota = row[14].to_i
         enrollment = row[15].to_i
@@ -68,6 +68,7 @@ module Crawler
         l.remark = remark
         l.lang = lang
         l.status = status
+        l.semesters << semester unless l.semesters.include?(semester)
         l.save
       end
     end
