@@ -33,15 +33,10 @@ class V1::LecturesController < V1::BaseController
   end
 
   def search
-    # TODO 'query'
-    # 1. empty string or too short query
-    # 2. unknown character
-
     query = params[:q].to_s.downcase
     page = params[:page].to_i || 0
 
-    @lectures = LecturesIndex::Lecture
-                .query(match: { 'course.name' => query })
+    @lectures = lectures_query(query, search_params)
                 .load(scope: lecture_scope)
                 .page(page)
                 .objects
@@ -54,5 +49,18 @@ class V1::LecturesController < V1::BaseController
 
   def lecture_scope
     Lecture.decorated(current_user).includes(:semesters, :professor, course: :department)
+  end
+
+  def lectures_query(query, params)
+    q = LecturesIndex::Lecture.query(match: { 'course.name' => query })
+    q = q.filter(terms: { 'course.department_id' => params[:department_ids] }) if params[:department_ids]
+    q = q.filter(terms: { 'course.target_grade' => params[:target_grades] }) if params[:target_grades]
+    q = q.filter(terms: { 'course.total_unit' => params[:total_units] }) if params[:total_units]
+    q = q.filter(terms: { 'course.category' => params[:categories] }) if params[:categories]
+    q
+  end
+
+  def search_params
+    params.permit(department_ids: [], target_grades: [], total_units: [], categories: [])
   end
 end
