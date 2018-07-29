@@ -52,7 +52,7 @@ class V1::LecturesController < V1::BaseController
   end
 
   def lectures_query(query, params)
-    q = LecturesIndex::Lecture.query(match: { 'course.name' => query })
+    q = LecturesIndex::Lecture.query(multi_match: { query: query, type: 'phrase_prefix', fields: ['course.name', 'course.tokenized_name'] })
     q = q.filter(terms: { 'course.department_id' => params[:department_ids] }) if params[:department_ids]
     q = q.filter(terms: { 'course.target_grade' => params[:target_grades] }) if params[:target_grades]
     q = q.filter(terms: { 'course.total_unit' => params[:total_units] }) if params[:total_units]

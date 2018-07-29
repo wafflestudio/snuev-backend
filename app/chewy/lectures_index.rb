@@ -1,15 +1,17 @@
 class LecturesIndex < Chewy::Index
   settings analysis: {
     analyzer: {
-      ngram: {
-        tokenizer: 'ngram'
+      name: {
+        tokenizer: 'standard',
+        filter: ['lowercase']
       }
     }
   }
 
   define_type Lecture.includes(:course, :professor) do
     field :course do
-      field :name, analyzer: 'ngram'
+      field :name, analyzer: 'name'
+      field :tokenized_name, type: 'keyword'
       field :code, type: 'keyword'
       field :target_grade, type: 'integer'
       field :total_unit, type: 'integer'
@@ -19,7 +21,7 @@ class LecturesIndex < Chewy::Index
       field :category, type: 'integer'
     end
     field :professor do
-      field :name, analyzer: 'ngram'
+      field :name, analyzer: 'name'
     end
     field :score, type: 'float'
     field :easiness, type: 'float'
