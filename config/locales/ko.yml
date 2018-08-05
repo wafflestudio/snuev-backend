@@ -12,6 +12,18 @@ ko:
         score: '평점'
         easiness: '난이도'
         grading: '학점만족도'
+      course:
+        target_grade:
+          '0': '전체'
+          '1': '1학년'
+          '2': '2학년'
+          '3': '3학년'
+          '4': '4학년'
+          '5': '5학년'
+          '6': '6학년'
+          '10': '석사'
+          '11': '박사'
+          '12': '석박사통합'
     errors:
       messages:
         record_invalid: '내용이 잘못되었습니다. %{errors}'

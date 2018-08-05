@@ -32,7 +32,7 @@ module Crawler
         classification = row[0]
         college = row[1]
         department = row[2]
-        target_grade = row[3].to_s[0].to_i #
+        target_grade = Course::ENUM_TARGET_GRADE[row[3].to_s[0]] || Course::ENUM_TARGET_GRADE[row[3]]
         course_code = row[4]
         lecture_code = row[5]
         course_title = row[6]

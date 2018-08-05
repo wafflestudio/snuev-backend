@@ -7,6 +7,19 @@ en:
     password_reset_expired: 'Your password reset request is expired. Try again.'
     password_updated: 'Successfully updated password.'
   activerecord:
+    attributes:
+      course:
+        target_grade:
+          '0': 'All'
+          '1': '1'
+          '2': '2'
+          '3': '3'
+          '4': '4'
+          '5': '5'
+          '6': '6'
+          '10': 'Masters'
+          '11': 'Doctorate'
+          '12': 'Combined MS/PhD'
     errors:
       messages:
         record_invalid: 'Record is invalid.'
