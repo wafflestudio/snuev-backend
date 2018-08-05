@@ -1,13 +1,15 @@
 class CoursesIndex < Chewy::Index
   settings analysis: {
     analyzer: {
-      ngram: {
-        tokenizer: 'ngram'
+      name: {
+        tokenizer: 'standard',
+        filter: ['lowercase']
       }
     }
   }
 
   define_type Course do
-    field :name, analyzer: 'ngram'
+    field :name, analyzer: 'name'
+    field :tokenized_name, type: 'keyword'
   end
 end

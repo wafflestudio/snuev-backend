@@ -17,7 +17,7 @@ class V1::CoursesController < V1::BaseController
 
     @courses = CoursesIndex::Course
                .load(scope: -> { includes(:department) })
-               .query(match: { name: query })
+               .query(multi_match: { query: query, type: 'phrase_prefix', fields: ['name^2', :tokenized_name] })
                .page(page)
                .objects
 
