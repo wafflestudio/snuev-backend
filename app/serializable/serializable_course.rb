@@ -3,7 +3,9 @@ class SerializableCourse < JSONAPI::Serializable::Resource
   attribute :id
   attribute :name
   attribute :category
-  attribute :target_grade
+  attribute :target_grade do
+    I18n.t(:"target_grade.#{@object.target_grade || 0}", scope: [:activerecord, :attributes, :course])
+  end
   attribute :total_unit
   attribute :lecture_unit
   attribute :lab_unit
