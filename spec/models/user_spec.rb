@@ -75,4 +75,33 @@ RSpec.describe User, type: :model do
       it { expect(user.update(password: new_password, reset_password: new_password)).to be_truthy }
     end
   end
+
+  describe '#authenticate' do
+    let(:user) { create(:user, password: 'password') }
+
+    it { expect(user.authenticate('password')).not_to be_falsy }
+    it { expect(user.authenticate('wrong_password')).to be_falsy }
+
+    context 'with legacy password' do
+      let(:user) { build(:user, legacy_password: legacy_password, password_digest: '').tap { |u| u.save(validate: false) } }
+      let(:legacy_password) { 'old_password' }
+
+      it { expect(user.authenticate(legacy_password)).not_to be_falsy }
+      it { expect { user.authenticate(legacy_password) }.to change { user.reload.legacy_password_hash }.to(nil) }
+      it { expect { user.authenticate(legacy_password) }.to change { user.reload.legacy_password_salt }.to(nil) }
+      it { expect { user.authenticate(legacy_password) }.to change { user.reload.password_digest } }
+      it { expect(user.authenticate('wrong_password')).to be_falsy }
+      it { expect { user.authenticate('wrong_password') }.not_to change { user.reload.legacy_password_hash } }
+      it { expect { user.authenticate('wrong_password') }.not_to change { user.reload.legacy_password_salt } }
+
+      context 'after migration' do
+        before { user.authenticate(legacy_password) }
+
+        it { expect(user.authenticate(legacy_password)).not_to be_falsy }
+        it { expect { user.authenticate(legacy_password) }.not_to change { user.reload.legacy_password_hash } }
+        it { expect { user.authenticate(legacy_password) }.not_to change { user.reload.legacy_password_salt } }
+        it { expect { user.authenticate(legacy_password) }.not_to change { user.reload.password_digest } }
+      end
+    end
+  end
 end

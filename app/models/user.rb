@@ -38,6 +38,15 @@ class User < ApplicationRecord
     )
   end
 
+  # Returns +self+ if the password is correct, otherwise +false+.
+  def authenticate(unencryted_password)
+    if legacy_password_hash.present?
+      match_legacy_password?(unencryted_password) && migrate_legacy_password(unencryted_password) && self
+    else
+      super
+    end
+  end
+
   private
 
   def set_email_from_username
@@ -54,5 +63,21 @@ class User < ApplicationRecord
 
   def check_current_password?
     password_digest_changed? && !reset_password
+  end
+
+  def match_legacy_password?(unencryted_password)
+    Digest::SHA1.hexdigest(unencryted_password + legacy_password_salt) == legacy_password_hash
+  end
+
+  # Migrates from old sha1 password to bcrypt.
+  # Bypasses validation since it's just storing old unencrtpyted_password
+  # into password_digest field using BCrypt encryption.
+  def migrate_legacy_password(unencryted_password)
+    assign_attributes(
+      password: unencryted_password,
+      legacy_password_salt: nil,
+      legacy_password_hash: nil
+    )
+    save(validate: false)
   end
 end
