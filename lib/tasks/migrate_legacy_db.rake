@@ -42,13 +42,13 @@ task :migrate_legacy_db, [:old_db_url] => [:environment] do |task, args|
 
   departments_map = {}
   OldDepartment.find_each do |old_department|
-    departments_map[old_department.id] = Department.create!(old_department.attributes).id
+    departments_map[old_department.id] = Department.create!(old_department.attributes.slice('name')).id
   end
 
   professors_map = {}
   OldProfessor.find_each do |old_professor|
     department_id = departments_map[old_professor.department_id]
-    professor = Professor.create!(old_professor.attributes.slice('id', 'name', 'created_at', 'updated_at'))
+    professor = Professor.create!(old_professor.attributes.slice('name', 'created_at', 'updated_at'))
     professor.department_ids << departments_map[department_id] if department_id
     professors_map[old_professor.id] = professor.id
   end
@@ -88,14 +88,14 @@ task :migrate_legacy_db, [:old_db_url] => [:environment] do |task, args|
     else # "오류"
       0
     end
-    courses_map[old_course.id] = Course.create!(old_course.attributes.slice('id', 'name', 'total_unit', 'lecture_unit', 'lab_unit', 'created_at', 'updated_at').merge(code: code, target_grade: target_grade, category: category)).id
+    courses_map[old_course.id] = Course.create!(old_course.attributes.slice('name', 'total_unit', 'lecture_unit', 'lab_unit', 'created_at', 'updated_at').merge(code: code, target_grade: target_grade, category: category)).id
   end
 
   lectures_map = {}
   OldLecture.find_each do |old_lecture|
     course_id = courses_map[old_lecture.course_id]
     professor_id = professors_map[old_lecture.professor_id]
-    lectures_map[old_lecture.id] = Lecture.create!(old_lecture.attributes.slice('id', 'created_at', 'updated_at').merge(course_id: course_id, professor_id: professor_id)).id
+    lectures_map[old_lecture.id] = Lecture.create!(old_lecture.attributes.slice('created_at', 'updated_at').merge(course_id: course_id, professor_id: professor_id)).id
   end
 
   seasonal_lectures_map = {}
