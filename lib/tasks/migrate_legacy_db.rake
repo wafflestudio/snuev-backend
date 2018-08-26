@@ -101,11 +101,11 @@ task :migrate_legacy_db, [:old_db_url] => [:environment] do |task, args|
   seasonal_lectures_map = {}
   OldSeasonalLecture.find_each do |old_seasonal_lecture|
     seasonal_lectures_map[old_seasonal_lecture.id] = LectureSession.create!(
+      department_id: departments_map[old_seasonal_lecture.department_id],
       lecture_id: lectures_map[old_seasonal_lecture.lecture_id],
       semester: Semester.find_or_create_by(year: old_seasonal_lecture.year, season: old_seasonal_lecture.semester - 1),
-      capacity: old_seasonal_lecture.capacity,
-      classroom: old_seasonal_lecture.classroom,
-      schedule: old_seasonal_lecture.schedule,
+      quota: old_seasonal_lecture.capacity,
+      location: old_seasonal_lecture.classroom,
       created_at: old_seasonal_lecture.created_at,
       updated_at: old_seasonal_lecture.updated_at,
     ).id

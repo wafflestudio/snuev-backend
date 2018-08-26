@@ -19,6 +19,8 @@ services:
       - ELASTIC_SEARCH_URL=es:9200
       - HTTP_HOST=localhost:3001
       - RAILS_ENV=development
+      - WEB_CONCURRENCY=1
+      - RAILS_MAX_THREADS=2
     env_file: .env
   db:
     image: postgres:9.6
