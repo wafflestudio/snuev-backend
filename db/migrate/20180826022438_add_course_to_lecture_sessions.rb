@@ -13,6 +13,6 @@ class AddCourseToLectureSessions < ActiveRecord::Migration[5.1]
     add_column :lecture_sessions, :remark, :string
     add_column :lecture_sessions, :lang, :string
     add_column :lecture_sessions, :status, :string
-    add_column :lecture_sessions, :deparment_id, :integer
+    add_column :lecture_sessions, :department_id, :integer
   end
 end

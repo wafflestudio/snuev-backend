@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 20180826022438) do
     t.string "remark"
     t.string "lang"
     t.string "status"
-    t.integer "deparment_id"
+    t.integer "department_id"
     t.index ["lecture_id"], name: "index_lecture_sessions_on_lecture_id"
     t.index ["semester_id"], name: "index_lecture_sessions_on_semester_id"
   end
