@@ -5,15 +5,15 @@ module Crawler
     def self.migrate(csv_path, year, season)
       raise Errno::ENOENT unless File.file? csv_path
       if !(year.to_i > 1994) then
-        puts "[!] 'year' shuold be greater than 1994"
+        Rails.logger.info "[!] 'year' shuold be greater than 1994"
         raise ArgumentError
       elsif !["spring", "autumn", "summer", "winter"].include?(season) then
-        puts "[!] 'season' should be in [spring, autumn, summer, winter]"
+        Rails.logger.info "[!] 'season' should be in [spring, autumn, summer, winter]"
         raise ArgumentError
       end
 
-      puts "[*] Insert season lectures from csv"
-      puts "[*] - #{csv_path}"
+      Rails.logger.info "[*] Insert season lectures from csv"
+      Rails.logger.info "[*] - #{csv_path}"
 
       semester = Semester.find_or_create_by(year: year, season: season)
 
@@ -27,7 +27,7 @@ module Crawler
 
       CSV.foreach(csv_path, "r").each_with_index do |row, line|
         next if line == 0
-        puts "[*] #{line} lectures inserted" if line % 500  == 0
+        Rails.logger.info "[*] #{line} lectures inserted" if line % 500  == 0
 
         classification = row[0]
         college = row[1]

@@ -47,12 +47,32 @@ RSpec.describe User, type: :model do
   describe '#issue_reset_token' do
     let(:user) { create(:user) }
 
-    it { expect { user.issue_reset_token }.to change { user.reload.reset_token}.from(nil) }
+    it { expect { user.issue_reset_token }.to change { user.reload.reset_token }.from(nil) }
   end
 
   describe '#issue_confirmation_token' do
     let(:user) { create(:user) }
 
-    it { expect { user.issue_confirmation_token }.to change { user.reload.confirmation_token}.from(nil) }
+    it { expect { user.issue_confirmation_token }.to change { user.reload.confirmation_token }.from(nil) }
+  end
+
+  describe 'update password' do
+    let(:user) { create(:user, password: old_password) }
+    let(:old_password) { 'password' }
+    let(:new_password) { 'new_password' }
+
+    it { expect(user.update(password: new_password, current_password: old_password)).to be_truthy }
+
+    context 'with wrong password_confirmation' do
+      it { expect(user.update(password: new_password, password_confirmation: 'wrong_password', current_password: old_password)).to be_falsey }
+    end
+
+    context 'without current_password' do
+      it { expect(user.update(password: new_password, password_confirmation: new_password)).to be_falsey }
+    end
+
+    context 'when reset_password provided' do
+      it { expect(user.update(password: new_password, reset_password: new_password)).to be_truthy }
+    end
   end
 end

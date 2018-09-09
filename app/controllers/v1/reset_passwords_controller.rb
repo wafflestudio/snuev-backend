@@ -18,7 +18,7 @@ class V1::ResetPasswordsController < V1::BaseController
     @user = User.find_by!(reset_token: params[:reset_token])
     if @user.reset_sent_at < 1.hour.ago
       render jsonapi_errors: { title: I18n.t(:password_reset_expired, scope: :messages) }, status: :forbidden
-    elsif @user.update(password: params[:password])
+    elsif @user.update(password: params[:password], reset_password: true)
       render jsonapi: nil, meta: { message: I18n.t(:password_updated, scope: :messages) }
     else
       render jsonapi_errors: @user.errors, status: :unprocessable_entity
