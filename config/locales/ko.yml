@@ -8,6 +8,8 @@ ko:
     password_updated: '비밀번호가 성공적으로 변경되었습니다.'
   activerecord:
     attributes:
+      user:
+        current_password: '현재 비밀번호'
       evaluation:
         score: '평점'
         easiness: '난이도'
@@ -28,6 +30,10 @@ ko:
       messages:
         record_invalid: '내용이 잘못되었습니다. %{errors}'
       models:
+        user:
+          attributes:
+            current_password:
+              incorrect: '일치하지 않습니다'
         evaluation:
           attributes:
             user:

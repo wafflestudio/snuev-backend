@@ -35,6 +35,6 @@ class V1::UsersController < V1::BaseController
   end
 
   def user_update_params
-    params.permit(:nickname, :password, :password_confirmation, :department_id)
+    params.permit(:nickname, :password, :password_confirmation, :current_password, :department_id)
   end
 end
