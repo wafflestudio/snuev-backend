@@ -23,8 +23,8 @@ module Crawler
 
       csv_path = xls_path.gsub(".xls", ".csv")
 
-      puts "[*] Converting xls to csv"
-      puts "[*] - #{xls_path}"
+      Rails.logger.info "[*] Converting xls to csv"
+      Rails.logger.info "[*] - #{xls_path}"
 
       excel = Roo::Excel.new(xls_path);
       mtx = excel.to_matrix
@@ -76,8 +76,8 @@ module Crawler
         end
       end
 
-      puts "[*] Completed"
-      puts "[*] - #{csv_path}"
+      Rails.logger.info "[*] Completed"
+      Rails.logger.info "[*] - #{csv_path}"
 
       return csv_path.to_s
     end

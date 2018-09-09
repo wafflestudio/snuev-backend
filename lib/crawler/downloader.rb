@@ -34,10 +34,10 @@ module Crawler
 
     def self.download(year, season, options = {})
       if !(year.to_i > 1994) then
-        puts "[!] 'year' shuold be greater than 1994"
+        Rails.logger.info "[!] 'year' shuold be greater than 1994"
         raise ArgumentError
       elsif !["spring", "autumn", "summer", "winter"].include?(season) then
-        puts "[!] 'season' should be in [spring, autumn, summer, winter]"
+        Rails.logger.info "[!] 'season' should be in [spring, autumn, summer, winter]"
         raise ArgumentError
       end
 
@@ -46,8 +46,8 @@ module Crawler
       path = config[:path]
       data = config[:data]
 
-      puts "[*] Start fetching..."
-      puts "[*] - #{year}/#{season}"
+      Rails.logger.info "[*] Start fetching..."
+      Rails.logger.info "[*] - #{year}/#{season}"
 
       uri = URI.parse(CRS_HOST)
 
@@ -55,14 +55,14 @@ module Crawler
         http.post(path, data)
       end
 
-      open(xls_path, "wb") do |file|
+      open(xls_path, 'wb') do |file|
         file.print(res.body)
       end
 
-      puts "[*] Downloaded:"
-      puts "[*] - #{xls_path}"
+      Rails.logger.info '[*] Downloaded:'
+      Rails.logger.info "[*] - #{xls_path}"
 
-      return xls_path.to_s
+      xls_path.to_s
     end
   end
 end
