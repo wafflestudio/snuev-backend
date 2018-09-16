@@ -61,10 +61,10 @@ module Crawler
         c.category = Lecture::ENUM_CATEGORY[classification]
         c.save
 
-        l = Lecture.find_or_create_by(name: course_title, code: lecture_code, course: c, professor: prof)
+        l = Lecture.find_or_create_by(name: course_title, course: c, professor: prof)
         l.save
 
-        ls = LectureSession.find_or_create_by(lecture: l, semester: semester, department: dept)
+        ls = LectureSession.find_or_create_by(lecture: l, semester: semester, code: lecture_code, department: dept)
         ls.target_grade = c.target_grade
         ls.quota = quota
         ls.class_time = class_time

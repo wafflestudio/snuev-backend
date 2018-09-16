@@ -99,6 +99,7 @@ task :migrate_legacy_db, [:old_db_url] => [:environment] do |task, args|
       department_id: departments_map[old_seasonal_lecture.department_id],
       lecture_id: lectures_map[old_seasonal_lecture.lecture_id],
       semester: Semester.find_or_create_by(year: old_seasonal_lecture.year, season: old_seasonal_lecture.semester - 1),
+      code: old_seasonal_lectures.class_code,
       quota: old_seasonal_lecture.capacity,
       location: old_seasonal_lecture.classroom,
       created_at: old_seasonal_lecture.created_at,
