@@ -171,8 +171,6 @@ ActiveRecord::Schema.define(version: 20180826022438) do
     t.string "reset_token"
     t.datetime "reset_sent_at"
     t.integer "department_id"
-    t.string "legacy_password_salt"
-    t.string "legacy_password_hash"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_token"], name: "index_users_on_reset_token", unique: true

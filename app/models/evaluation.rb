@@ -1,7 +1,7 @@
 class Evaluation < ApplicationRecord
   belongs_to :lecture, counter_cache: true
   belongs_to :semester, optional: true
-  belongs_to :user
+  belongs_to :user, optional: true
   has_many :votes, as: :votable
   has_many :upvotes, as: :votable, class_name: 'Vote::Upvote'
   has_many :downvotes, as: :votable, class_name: 'Vote::Downvote'

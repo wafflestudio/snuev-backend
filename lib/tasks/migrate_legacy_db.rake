@@ -3,11 +3,6 @@
 task :migrate_legacy_db, [:old_db_url] => [:environment] do |task, args|
   OLD_DB_URL = args.old_db_url
 
-  class OldUser < ActiveRecord::Base
-    establish_connection OLD_DB_URL
-    self.table_name = :users
-  end
-
   class OldEvaluation < ActiveRecord::Base
     establish_connection OLD_DB_URL
     self.table_name = :evaluations
@@ -111,27 +106,10 @@ task :migrate_legacy_db, [:old_db_url] => [:environment] do |task, args|
     ).id
   end
 
-  users_map = {}
-  OldUser.find_each do |old_user|
-    user = User.new(
-      nickname: old_user.nickname,
-      username: old_user.username,
-      email: "#{old_user.username}@snu.ac.kr",
-      department_id: departments_map[old_user.department_id],
-      legacy_password_salt: old_user.password_salt,
-      legacy_password_hash: old_user.password_hash,
-      created_at: old_user.created_at,
-      updated_at: old_user.updated_at
-    )
-    user.save(validate: false)
-    users_map[old_user.id] = user.id
-  end
-
   evaluations_map = {}
   OldEvaluation.includes(:seasonal_lecture).find_each do |old_evaluation|
     semester = old_evaluation.seasonal_lecture && Semester.find_or_create_by(year: old_evaluation.seasonal_lecture.year, season: old_evaluation.seasonal_lecture.semester - 1)
     evaluation = Evaluation.new(
-      user_id: users_map[old_evaluation.user_id],
       lecture_id: lectures_map[old_evaluation.lecture_id],
       comment: old_evaluation.comment&.gsub('<br />', "\n"),
       score: old_evaluation.eval_point,
@@ -151,7 +129,6 @@ task :migrate_legacy_db, [:old_db_url] => [:environment] do |task, args|
     courses_map: courses_map,
     lectures_map: lectures_map,
     seasonal_lectures_map: seasonal_lectures_map,
-    users_map: users_map,
     evaluations_map: evaluations_map
   }.to_json)
 end
