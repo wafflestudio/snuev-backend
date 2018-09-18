@@ -53,7 +53,7 @@ module Crawler
         prof = Professor.find_or_create_by(name: professor)
         dept.professors << prof
 
-        c = Course.find_or_create_by(name: course_title, department: dept, code: course_code)
+        c = Course.find_or_create_by(name: course_title, code: course_code)
         c.target_grade = target_grade
         c.total_unit = total_credit
         c.lecture_unit = lecture_credit
@@ -61,15 +61,18 @@ module Crawler
         c.category = Lecture::ENUM_CATEGORY[classification]
         c.save
 
-        l = Lecture.find_or_create_by(name: course_title, code: lecture_code, course: c, professor: prof)
-        l.quota = quota
-        l.class_time = class_time
-        l.location = location
-        l.remark = remark
-        l.lang = lang
-        l.status = status
-        l.semesters << semester unless l.semesters.include?(semester)
+        l = Lecture.find_or_create_by(name: course_title, course: c, professor: prof)
         l.save
+
+        ls = LectureSession.find_or_create_by(lecture: l, semester: semester, code: lecture_code, department: dept)
+        ls.target_grade = c.target_grade
+        ls.quota = quota
+        ls.class_time = class_time
+        ls.location = location
+        ls.remark = remark
+        ls.lang = lang
+        ls.status = status
+        ls.save
       end
     end
   end

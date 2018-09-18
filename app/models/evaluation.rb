@@ -1,7 +1,7 @@
 class Evaluation < ApplicationRecord
   belongs_to :lecture, counter_cache: true
   belongs_to :semester, optional: true
-  belongs_to :user
+  belongs_to :user, optional: true
   has_many :votes, as: :votable
   has_many :upvotes, as: :votable, class_name: 'Vote::Upvote'
   has_many :downvotes, as: :votable, class_name: 'Vote::Downvote'
@@ -10,7 +10,7 @@ class Evaluation < ApplicationRecord
   validates :score, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 10, only_integer: true }
   validates :easiness, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 10, only_integer: true }
   validates :grading, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 10, only_integer: true }
-  validates :user, uniqueness: { scope: :lecture }
+  validates :user, uniqueness: { scope: :lecture, allow_nil: true }
 
   before_validation :set_default_semester
   after_save :update_lecture_scores

@@ -27,6 +27,5 @@ class LecturesIndex < Chewy::Index
     field :easiness, type: 'float'
     field :grading, type: 'float'
     field :evaluations_count, type: 'integer'
-    field :quota, type: 'integer'
   end
 end

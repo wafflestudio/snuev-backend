@@ -75,4 +75,11 @@ RSpec.describe User, type: :model do
       it { expect(user.update(password: new_password, reset_password: new_password)).to be_truthy }
     end
   end
+
+  describe '#authenticate' do
+    let(:user) { create(:user, password: 'password') }
+
+    it { expect(user.authenticate('password')).not_to be_falsy }
+    it { expect(user.authenticate('wrong_password')).to be_falsy }
+  end
 end

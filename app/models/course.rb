@@ -12,7 +12,7 @@ class Course < ApplicationRecord
   }.with_indifferent_access
 
   has_many :lectures
-  belongs_to :department
+  belongs_to :department, optional: true
 
   update_index('courses#course') { self }
   update_index('lectures#lecture') { lectures }
