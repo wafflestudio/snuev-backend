@@ -11,6 +11,6 @@ module WebUrlHelper
 
   def web_password_reset_url(reset_token)
     query = { reset_token: reset_token }
-    "#{WEB_BASE}/reset_password?#{query.to_param}"
+    "#{WEB_BASE}/new_password?#{query.to_param}"
   end
 end
