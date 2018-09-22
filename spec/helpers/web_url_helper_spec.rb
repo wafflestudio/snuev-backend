@@ -14,6 +14,6 @@ RSpec.describe WebUrlHelper, type: :helper do
     let(:reset_token) { 'abc' }
     subject(:web_reset_password_url) { helper.web_password_reset_url(reset_token) }
 
-    it { expect(subject).to eq('https://snuev.kr/reset_password?reset_token=abc') }
+    it { expect(subject).to eq('https://snuev.kr/new_password?reset_token=abc') }
   end
 end
