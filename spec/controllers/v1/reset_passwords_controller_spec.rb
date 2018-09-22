@@ -33,6 +33,7 @@ RSpec.describe V1::ResetPasswordsController, type: :controller do
 
       it { expect(update_request).to be_successful }
       it { expect { update_request }.to change { user.reload.password_digest } }
+      it { expect { update_request }.to change { user.reload.reset_token }.to(nil) }
 
       context 'when invalid new password' do
         let(:password) { 'short' }
@@ -40,6 +41,7 @@ RSpec.describe V1::ResetPasswordsController, type: :controller do
         it { expect(update_request).not_to be_successful }
         it { expect(update_request).to have_http_status(:unprocessable_entity) }
         it { expect { update_request }.not_to change { user.reload.password_digest } }
+        it { expect { update_request }.not_to change { user.reload.reset_token } }
       end
     end
 
