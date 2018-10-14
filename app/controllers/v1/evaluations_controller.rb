@@ -11,7 +11,7 @@ class V1::EvaluationsController < V1::BaseController
 
   def latest
     @evaluations = Evaluation.decorated(current_user).order(id: :desc).includes(:lecture, :semester).page(params[:page])
-    render jsonapi: @evaluations, include: [:lecture, :semester]
+    render jsonapi: @evaluations, include: [:semester, lecture: { course: :department }]
   end
 
   def most_liked
@@ -20,7 +20,7 @@ class V1::EvaluationsController < V1::BaseController
                    .order(upvotes_count: :desc)
                    .where('evaluations.created_at > ?', Date.today.ago(3.months))
                    .includes(:lecture, :semester).page(params[:page])
-    render jsonapi: @evaluations, include: [:lecture, :semester]
+    render jsonapi: @evaluations, include: [:semester, lecture: { course: :department }]
   end
 
   def mine
@@ -32,7 +32,7 @@ class V1::EvaluationsController < V1::BaseController
                    end
     @evaluations = @evaluations.decorated(current_user).includes(:lecture, :semester).page(params[:page])
 
-    render jsonapi: @evaluations, include: [:lecture, :semester]
+    render jsonapi: @evaluations, include: [:semester, lecture: { course: :department }]
   end
 
   def create
