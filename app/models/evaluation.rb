@@ -1,5 +1,6 @@
 class Evaluation < ApplicationRecord
   belongs_to :lecture, counter_cache: true
+  belongs_to :lecture_session, optional: true
   belongs_to :semester, optional: true
   belongs_to :user, optional: true
   has_many :votes, as: :votable
@@ -12,7 +13,7 @@ class Evaluation < ApplicationRecord
   validates :grading, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 10, only_integer: true }
   validates :user, uniqueness: { scope: :lecture, allow_nil: true }
 
-  before_validation :set_default_semester
+  before_validation :set_default_lecture_session
   after_save :update_lecture_scores
   after_destroy :update_lecture_scores
 
@@ -41,8 +42,13 @@ class Evaluation < ApplicationRecord
     comment.to_s[0...10]
   end
 
-  def set_default_semester
-    self.semester ||= lecture.semesters.order(year: :desc, season: :desc).first
+  def set_default_lecture_session
+    if semester
+      self.lecture_session ||= lecture.lecture_sessions.find_by(semester: semester)
+    else
+      self.lecture_session ||= lecture.lecture_sessions.order(semester_id: :desc).first
+      self.semester = lecture_session&.semester
+    end
   end
 
   def update_lecture_scores
