@@ -12,6 +12,7 @@ class SerializableEvaluation < JSONAPI::Serializable::Resource
   attribute :updated_at
   belongs_to :semester
   belongs_to :lecture
+  belongs_to :lecture_session
 
   attribute :can_update do
     @current_ability.can? :update, @object
