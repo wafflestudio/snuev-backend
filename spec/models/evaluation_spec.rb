@@ -9,7 +9,7 @@ RSpec.describe Evaluation, type: :model do
     it { expect(build(:evaluation, score: 3, easiness: 5, grading: 6)).to be_valid }
   end
 
-  describe '#set_default_semester' do
+  describe '#set_default_lecture_session' do
     let(:lecture) { create(:lecture) }
     let(:evaluation) { build(:evaluation, lecture: lecture) }
 
@@ -22,6 +22,22 @@ RSpec.describe Evaluation, type: :model do
       let(:semesters) { create_list(:semester, 2) }
 
       it { expect(evaluation.semester).to eq(semesters.last) }
+
+      context 'when explicitly specify semester' do
+        let(:lecture) { create(:lecture, semesters: semesters) }
+        let(:semesters) { create_list(:semester, 2) }
+        let(:evaluation) { create(:evaluation, lecture: lecture, semester: semesters[0]) }
+
+        it { expect(evaluation.semester).to eq(semesters[0]) }
+      end
+
+      context 'when explicitly specify lecture_session' do
+        let(:lecture) { create(:lecture, semesters: semesters) }
+        let(:semesters) { create_list(:semester, 2) }
+        let(:evaluation) { create(:evaluation, lecture: lecture, lecture_session: lecture.lecture_sessions.where(semester: semesters[0]).first) }
+
+        it { expect(evaluation.semester).to eq(semesters[0]) }
+      end
     end
   end
 
