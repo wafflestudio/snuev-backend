@@ -6,9 +6,6 @@ services:
     depends_on:
       - db
       - es
-    links:
-      - db
-      - es
     volumes:
       - '.:/usr/src/app'
       - 'bundle:/bundle'
@@ -22,13 +19,9 @@ services:
     volumes:
       - 'postgres:/var/lib/postgresql/data'
   es:
-    image: thefron/elasticsearch-seunjeon
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.4.2
     environment:
       - ES_JAVA_OPTS=-Xmx128m -Xms128m
-      - xpack.security.enabled=false
-      - xpack.monitoring.enabled=false
-      - xpack.watcher.enabled=false
-      - xpack.graph.enabled=false
     volumes:
       - 'esdata:/usr/share/elasticsearch/data'
     ports:
